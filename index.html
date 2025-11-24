@@ -67,11 +67,20 @@
 
         .branding { display: flex; align-items: flex-start; gap: 20px; }
         
-        /* CSS für das Inline-SVG Wappen */
-        .logo-wrapper svg {
+        /* CSS für das Wappen (MODIFIED to target wrapper and img) */
+        .logo-wrapper {
             width: 40px; 
             height: 40px; 
             display: block;
+            flex-shrink: 0; /* Verhindert, dass das Logo schrumpft */
+        }
+        
+        /* NEW: Style for the external SVG image */
+        .logo-wrapper .logo-img-external {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: contain;
         }
 
         .branding-text {
@@ -396,10 +405,7 @@
             <div class="header-inner">
                 <div class="branding">
                     <div class="logo-wrapper">
-                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schweizerkreuz">
-                            <rect width="100" height="100" fill="#dc0018"/>
-                            <path fill="#fff" d="M30 15h40v70H30V15zm-15 30h70v10H15V45z"/>
-                        </svg>
+                        <img src="Coat_of_arms_of_Switzerland.svg" alt="Wappen der Schweiz" class="logo-img-external">
                     </div>
                     <div class="branding-text">
                         <strong>Bundesamt für Bauten und Logistik BBL</strong>
@@ -616,12 +622,12 @@ dct:Standard "Gebäude-Schema"
 ├── dct:title: "Gebäude"@de, "Bâtiment"@fr, "Edificio"@it
 ├── dct:description: Definition gemäss KBOB/TERMDAT
 ├── bv:hasAttribute:
-│   ├── bv:Attribute "Baujahr"
-│   │   ├── dct:type: "xsd:gYear"
-│   │   ├── dct:required: true
-│   │   └── dct:conformsTo → skos:ConceptScheme "Jahre"
-│   └── bv:Attribute "Gebäudetyp"
-│       └── dct:conformsTo → skos:ConceptScheme "Gebäudetypen"
+│   ├── bv:Attribute "Baujahr"
+│   │   ├── dct:type: "xsd:gYear"
+│   │   ├── dct:required: true
+│   │   └── dct:conformsTo → skos:ConceptScheme "Jahre"
+│   └── bv:Attribute "Gebäudetyp"
+│       └── dct:conformsTo → skos:ConceptScheme "Gebäudetypen"
 └── dcat:version: "3.0.0"
             </pre>
 
@@ -656,21 +662,21 @@ dct:Standard "Gebäude-Schema"
             <pre style="background:#f2f2f2; padding:15px; border:1px solid #ddd; font-size:14px; overflow-x:auto; color:#444;">
 BBL Immobilienkatalog (dcat:Catalog)
 ├── Geschäftsobjekt-Schemas (Konzeptuelle Ebene)
-│   ├── dct:Standard "Gebäude-Schema" v3.0.0
-│   └── dct:Standard "Grundstück-Schema" v2.1.0
+│   ├── dct:Standard "Gebäude-Schema" v3.0.0
+│   └── dct:Standard "Grundstück-Schema" v2.1.0
 │
 ├── Datenattribute (Logische Ebene)
-│   ├── bv:Attribute "EGID" (required, unique)
-│   └── bv:Attribute "Nutzfläche" (decimal, m²)
+│   ├── bv:Attribute "EGID" (required, unique)
+│   └── bv:Attribute "Nutzfläche" (decimal, m²)
 │
 ├── Wertelisten (Referenzdaten)
-│   ├── skos:ConceptScheme "Gebäudetypen" v2.1.0
-│   └── skos:ConceptScheme "Kantone" v1.0.0
+│   ├── skos:ConceptScheme "Gebäudetypen" v2.1.0
+│   └── skos:ConceptScheme "Kantone" v1.0.0
 │
 └── Datasets (Physische Ebene)
-    ├── dcat:Dataset "Gebäudestammdaten 2025"
-    │   └── dcat:Distribution (SAP-Export, REST-API)
-    └── dcat:DataService "IMMO-API v2"
+    ├── dcat:Dataset "Gebäudestammdaten 2025"
+    │   └── dcat:Distribution (SAP-Export, REST-API)
+    └── dcat:DataService "IMMO-API v2"
             </pre>
             <p>Diese Struktur ermöglicht die vollständige Nachvollziehbarkeit der Datenherkunft, klare Verantwortlichkeiten und erfüllt alle regulatorischen Anforderungen der Bundesverwaltung.</p>
 
@@ -707,21 +713,21 @@ BBL Immobilienkatalog (dcat:Catalog)
             <pre style="background:#f2f2f2; padding:15px; border:1px solid #ddd; font-size:14px; overflow-x:auto; color:#444;">
 BBL Immobilienkatalog (dcat:Catalog)
 ├── Geschäftsobjekt-Schemas (Konzeptuelle Ebene)
-│   ├── dct:Standard "Gebäude-Schema" v3.0.0
-│   └── dct:Standard "Grundstück-Schema" v2.1.0
+│   ├── dct:Standard "Gebäude-Schema" v3.0.0
+│   └── dct:Standard "Grundstück-Schema" v2.1.0
 │
 ├── Datenattribute (Logische Ebene)
-│   ├── bv:Attribute "EGID" (required, unique)
-│   └── bv:Attribute "Nutzfläche" (decimal, m²)
+│   ├── bv:Attribute "EGID" (required, unique)
+│   └── bv:Attribute "Nutzfläche" (decimal, m²)
 │
 ├── Wertelisten (Referenzdaten)
-│   ├── skos:ConceptScheme "Gebäudetypen" v2.1.0
-│   └── skos:ConceptScheme "Kantone" v1.0.0
+│   ├── skos:ConceptScheme "Gebäudetypen" v2.1.0
+│   └── skos:ConceptScheme "Kantone" v1.0.0
 │
 └── Datasets (Physische Ebene)
-    ├── dcat:Dataset "Gebäudestammdaten 2025"
-    │   └── dcat:Distribution (SAP-Export, REST-API)
-    └── dcat:DataService "IMMO-API v2"
+    ├── dcat:Dataset "Gebäudestammdaten 2025"
+    │   └── dcat:Distribution (SAP-Export, REST-API)
+    └── dcat:DataService "IMMO-API v2"
             </pre>
             <p>Diese Struktur ermöglicht die vollständige Nachvollziehbarkeit der Datenherkunft, klare Verantwortlichkeiten und erfüllt alle regulatorischen Anforderungen der Bundesverwaltung.</p>
         `;
