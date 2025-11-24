@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Logisches Datenmodell</title>
     
-    <!-- Google Material Symbols (Rounded) -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
 
     <style>
@@ -17,6 +16,8 @@
             --text-light: #666666;
             --border: #CCCCCC;
             --bg-gray: #F5F5F5;
+            --footer-bg: #454545;
+            --link-color: #0066CC; /* Neu: Dunkles Blau für Links */
             --font-stack: "Frutiger", "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
 
@@ -26,6 +27,9 @@
             color: var(--text-dark); 
             background: white;
             -webkit-font-smoothing: antialiased;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         
         * { box-sizing: border-box; }
@@ -40,14 +44,19 @@
             user-select: none;
         }
 
-        /* --- 2. LAYOUT CONTAINER --- */
-        .container {
+        /* --- 2. LAYOUT UTILITIES & CONTAINERS --- */
+        .u-max-width {
             max-width: 1160px;
             margin: 0 auto;
             padding: 0 20px;
+            width: 100%;
         }
 
-        /* --- 3. HEADER --- */
+        .container {
+            flex: 1; 
+        }
+
+        /* --- 3. HEADER & BRANDING --- */
         header { padding-top: 30px; padding-bottom: 20px; }
         
         .header-inner {
@@ -57,20 +66,13 @@
         }
 
         .branding { display: flex; align-items: flex-start; gap: 20px; }
-        .swiss-shield {
-            width: 40px; height: 40px; 
-            background: var(--swiss-red);
-            position: relative; 
-            border-radius: 0 0 50% 50%;
-            display: flex; align-items: center; justify-content: center;
+        
+        /* CSS für das Inline-SVG Wappen */
+        .logo-wrapper svg {
+            width: 40px; 
+            height: 40px; 
+            display: block;
         }
-        .swiss-cross { position: relative; width: 20px; height: 20px; }
-        .swiss-cross::before, .swiss-cross::after {
-            content: ""; position: absolute; background: white;
-            top: 50%; left: 50%; transform: translate(-50%, -50%);
-        }
-        .swiss-cross::before { width: 16px; height: 4px; }
-        .swiss-cross::after { width: 4px; height: 16px; }
 
         .branding-text {
             border-left: 1px solid #999;
@@ -81,8 +83,21 @@
         .branding-text strong { display: block; font-weight: 700; color: var(--text-black); }
         .branding-text span { display: block; color: var(--text-black); font-size: 15px; }
 
-        .top-meta { font-size: 14px; display: flex; gap: 25px; color: var(--text-black); }
-        .lang-selector { font-weight: bold; display: flex; align-items: center; gap: 2px; cursor: pointer; }
+        .top-meta { 
+            font-size: 14px; 
+            display: flex; 
+            gap: 25px; 
+            color: var(--text-black);
+            align-items: center; 
+        }
+        
+        .lang-selector { 
+            font-weight: 400; 
+            display: flex; 
+            align-items: center; 
+            gap: 2px; 
+            cursor: pointer; 
+        }
         .lang-selector .material-symbols-rounded { font-size: 18px; }
 
         /* --- 4. NAVIGATION TABS --- */
@@ -100,7 +115,9 @@
             cursor: pointer;
         }
         .nav-link.active {
-            border-bottom: 3px solid var(--swiss-red);
+            font-weight: bold;
+            color: var(--swiss-red);
+            border-bottom: 4px solid var(--swiss-red);
             margin-bottom: -1px;
         }
 
@@ -134,6 +151,14 @@
             font-weight: 400;
             margin: 10px 0 40px 0;
             color: var(--text-black);
+        }
+        
+        /* --- 10. Heading Unification (New) --- */
+        .page-title-h2 {
+            font-size: 34px !important;
+            font-weight: 400 !important;
+            margin: 10px 0 40px 0 !important;
+            color: var(--text-black) !important;
         }
 
         .toolbar {
@@ -172,7 +197,7 @@
         .toggle-icon.active { background: #666; color: white; pointer-events: none; }
         .toggle-icon.inactive { background: white; color: #333; border: 1px solid #ccc; }
 
-        /* --- 7. GRID VIEW --- */
+        /* --- 7. CARD/TAGS/DETAIL --- */
         .grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -201,18 +226,19 @@
         .card-img { width: 100%; height: 100%; object-fit: cover; }
         .tags-overlay { position: absolute; top: 20px; left: 20px; display: flex; gap: 10px; }
         
-        /* Universal Tag Pill */
+        /* === UNIVERSAL TAG PILL STYLE === */
         .tag-pill {
             background: white;
             border: 1px solid #999;
-            padding: 8px 15px;
+            padding: 6px 16px;
             border-radius: 20px;
-            font-size: 14px;
+            font-size: 13px;
             color: #444;
             font-weight: 400;
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
+            white-space: nowrap;
             transition: all 0.2s ease;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
@@ -224,10 +250,10 @@
 
         .card-body { padding: 30px; display: flex; flex-direction: column; flex-grow: 1; }
         h3.card-title { 
-            font-size: 16px; font-weight: 700; margin: 0 0 15px 0; color: var(--text-black); 
+            font-size: 20px; font-weight: 700; margin: 0 0 15px 0; color: var(--text-black); 
         }
         p.card-desc { 
-            font-size: 16px; line-height: 1.5; color: var(--text-black); margin: 0 0 20px 0; flex-grow: 1; 
+            font-size: 16px; line-height: 1.5; color: var(--text-black); margin: 0 0 35px 0; flex-grow: 1; 
         }
         .card-footer { display: flex; justify-content: space-between; align-items: flex-end; }
         .tags-bottom { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -237,10 +263,9 @@
             display: flex; align-items: center; justify-content: center;
             color: var(--swiss-red); flex-shrink: 0; transition: all 0.2s;
         }
-        .btn-arrow .material-symbols-rounded { font-size: 22px; }
-        .card:hover .btn-arrow { border-color: var(--swiss-red); background: var(--swiss-red); color: white; }
+        .btn-arrow:hover { border-color: var(--swiss-red); background: var(--swiss-red); color: white; }
 
-        /* --- 8. LIST VIEW (New) --- */
+        /* --- 8. LIST VIEW --- */
         .list-table { width: 100%; border-collapse: collapse; font-size: 15px; margin-bottom: 80px; }
         .list-table th {
             text-align: left; background: #F2F4F5; padding: 15px;
@@ -254,7 +279,22 @@
         .col-desc { color: var(--text-black); line-height: 1.5; }
         .col-tags { width: 30%; text-align: right; }
 
-        /* --- DETAIL VIEW SPECIFIC --- */
+        /* --- DETAIL VIEW SPECIFIC & CONTENT LINKS (NEW) --- */
+        
+        /* Links in statischem Content und Detailansicht hervorheben */
+        #view-about a:not(.footer-link), 
+        #view-handbuch a:not(.footer-link),
+        #view-detail a:not(.footer-link) {
+            color: var(--link-color);
+            text-decoration: underline;
+        }
+        #view-about a:not(.footer-link):hover,
+        #view-handbuch a:not(.footer-link):hover,
+        #view-detail a:not(.footer-link):hover {
+            text-decoration: none;
+        }
+
+
         .detail-hero { display: flex; gap: 50px; margin-bottom: 60px; margin-top: 20px; }
         .detail-info { flex: 1; }
         .detail-image-box { flex: 1; max-width: 600px; }
@@ -288,22 +328,78 @@
         .attr-table td { padding: 16px; border-bottom: 1px solid #E5E5E5; vertical-align: top; line-height: 1.5; }
         .attr-table tbody tr:hover { background-color: #F2F4F5; }
         
-        .badge-pk { border: 1px solid #333; color: #333; padding: 2px 8px; border-radius: 10px; font-size: 12px; font-weight: bold; }
-        .badge-fk { border: 1px solid #666; color: #666; padding: 2px 8px; border-radius: 10px; font-size: 12px; }
-        .badge-val { border: 1px solid #999; padding: 2px 10px; border-radius: 10px; font-size: 12px; background: white; }
-        .fmt-pill { border: 1px solid #ccc; padding: 2px 10px; border-radius: 12px; font-size: 13px; }
+        /* --- ABOUT & HANDBUCH VIEW SPECIFIC --- */
+        #view-about, #view-handbuch { padding-bottom: 80px; }
+        /* Style für nachfolgende H2 */
+        #view-about h2, #view-handbuch h2 { 
+            font-size: 28px; 
+            font-weight: 700; 
+            margin-top: 50px; 
+            margin-bottom: 20px; 
+        }
+        #view-about h3, #view-handbuch h3 { font-size: 24px; font-weight: 700; margin-top: 40px; margin-bottom: 15px; }
+        #view-about p, #view-handbuch p { font-size: 16px; line-height: 1.6; margin-bottom: 20px; }
+        #view-about ul, #view-handbuch ul { list-style-type: disc; padding-left: 25px; margin-bottom: 20px; }
+        #view-about li, #view-handbuch li { font-size: 16px; line-height: 1.6; margin-bottom: 8px; }
+        #view-about strong, #view-handbuch strong { font-weight: 700; }
+        #view-about .info-link, #view-handbuch .info-link { margin-top: 30px; }
+
+        /* Spezifische Styling für das Bild im Handbuch */
+        .handbuch-img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 30px 0;
+            border: 1px solid #E5E5E5;
+            border-radius: 4px;
+        }
+
+
+        /* --- 9. FOOTER --- */
+        footer {
+            background-color: var(--footer-bg);
+            color: white;
+            height: 40px;
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+        }
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+        .footer-left {
+            display: flex;
+            gap: 30px;
+        }
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .footer-link:hover { text-decoration: underline; }
+        .footer-link .material-symbols-rounded { font-size: 16px; }
+        .footer-right {
+            color: #ccc;
+        }
 
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- HEADER -->
+    <div class="container u-max-width">
         <header>
             <div class="header-inner">
                 <div class="branding">
                     <div class="logo-wrapper">
-                        <div class="swiss-shield"><div class="swiss-cross"></div></div>
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schweizerkreuz">
+                            <rect width="100" height="100" fill="#dc0018"/>
+                            <path fill="#fff" d="M30 15h40v70H30V15zm-15 30h70v10H15V45z"/>
+                        </svg>
                     </div>
                     <div class="branding-text">
                         <strong>Bundesamt für Bauten und Logistik BBL</strong>
@@ -318,15 +414,13 @@
                 </div>
             </div>
 
-            <div class="nav-tabs">
-                <div class="nav-link active">Logisches Datenmodell</div>
-                <div class="nav-link">Datenkatalog</div>
-                <div class="nav-link">Über diesen Datenkatalog</div>
-                <div class="nav-link">Handbuch</div>
+            <div class="nav-tabs" id="nav-tabs">
+                <div id="tab-model" class="nav-link active" data-page="model">Logisches Datenmodell</div>
+                <div id="tab-about" class="nav-link" data-page="about">Über diesen Datenkatalog</div>
+                <div id="tab-handbuch" class="nav-link" data-page="handbuch">Handbuch</div>
             </div>
         </header>
 
-        <!-- SUB HEADER -->
         <div class="sub-header">
             <div class="breadcrumbs" id="breadcrumbs">
                 Startseite <span>></span> Logisches Datenmodell
@@ -338,11 +432,9 @@
         </div>
 
         <main>
-            <!-- === CATALOG WRAPPER === -->
             <div id="view-catalog">
                 <h1 class="page-title">Logisches Datenmodell</h1>
                 
-                <!-- Controls -->
                 <div class="toolbar">
                     <div class="search-group">
                         <div class="input-wrapper">
@@ -355,19 +447,17 @@
                         </button>
                     </div>
                     <div class="view-toggles">
-                        <div id="btn-grid" class="toggle-icon active" onclick="switchView('grid')">
+                        <div id="btn-grid" class="toggle-icon active" data-view="grid">
                             <span class="material-symbols-rounded">grid_view</span>
                         </div>
-                        <div id="btn-list" class="toggle-icon inactive" onclick="switchView('list')">
+                        <div id="btn-list" class="toggle-icon inactive" data-view="list">
                             <span class="material-symbols-rounded">view_list</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Grid View Container -->
                 <div id="grid-container" class="grid"></div>
 
-                <!-- List View Container -->
                 <table id="list-container" class="list-table hidden">
                     <thead>
                         <tr>
@@ -380,7 +470,6 @@
                 </table>
             </div>
 
-            <!-- === DETAIL VIEW === -->
             <div id="view-detail" class="hidden">
                 <h1 class="page-title" id="detail-title">Title</h1>
                 
@@ -420,225 +509,561 @@
                 </table>
                 <div style="height:100px;"></div>
             </div>
+
+            <div id="view-about" class="hidden">
+                <h1 class="page-title">Über diesen Datenkatalog</h1>
+                </div>
+
+             <div id="view-handbuch" class="hidden">
+                <h1 class="page-title">Handbuch</h1>
+                </div>
         </main>
     </div>
 
+    <footer>
+        <div class="footer-inner u-max-width">
+            <div class="footer-left">
+                <a href="https://www.admin.ch/gov/de/start/rechtliches.html" target="_blank" class="footer-link">
+                    <span class="material-symbols-rounded">open_in_new</span>
+                    Rechtliche Grundlagen
+                </a>
+                <a href="https://github.com/davras5/meta-bv/" target="_blank" class="footer-link">
+                    <span class="material-symbols-rounded">open_in_new</span>
+                    Quellcode (GitHub)
+                </a>
+            </div>
+            <div class="footer-right">
+                Version 1.0.0
+            </div>
+        </div>
+    </footer>
+
     <script>
-        let db = [];
-        let currentView = 'grid'; // 'grid' or 'list'
-        let currentFilter = '';
+        // === DATEN & KONSTANTEN ===
+        const ABOUT_CONTENT = `
+            <h2 class="page-title-h2">Was ist ein Datenkatalog?</h2> 
+            <p>Ein Metadatenkatalog ist die gemeinsame Sprache für die Daten einer Organisation. Im Immobilienmanagement des Bundes arbeiten verschiedene Abteilungen und Systeme oft mit unterschiedlichen Begriffen für dieselben Konzepte. Diese fehlende Standardisierung verhindert Interoperabilität und erschwert die Zusammenarbeit. Der Metadatenkatalog etabliert einheitliche Standards und Definitionen für alle Geschäftsobjekte und dokumentiert transparent deren Zusammenhänge, Verantwortlichkeiten und Nutzungsmöglichkeiten. Als zentrale Referenz schafft er die Grundlage für eine vernetzte Datenbewirtschaftung in der Bundesverwaltung.</p>
+            
+            <h2>Wieso ist das für uns relevant?</h2>
+            <p>Das BBL verwaltet das Immobilienportfolio des Bundes mit tausenden von Datenelementen aus verschiedensten Fachanwendungen. Die manuelle Dokumentation dieser komplexen Datenlandschaft ist nicht mehr beherrschbar. Gleichzeitig verlangen regulatorische Anforderungen (DSG, EMBAV, ISG, BGÖ) lückenlose Nachweise über unsere Datenverarbeitungen. Ohne systematische Metadatenverwaltung werden Compliance-Risiken unkalkulierbar und das Once-Only-Prinzip bleibt unerreichbar.</p>
+            
+            <h2>Was sind die Ziele dieses Metadatenkatalogs?</h2>
+            <ul>
+                <li><strong>Dreistufiges Metadatenmodell:</strong> Klare Trennung zwischen fachlichen Geschäftsobjekten, Datenmodellierung und technischer Implementierung nach TOGAF-Standard</li>
+                <li><strong>Business-freundliche Oberfläche:</strong> Verständliche Darstellung ohne technische Komplexität bei voller Integration mit Innovator EA im Hintergrund</li>
+                <li><strong>Automatisierte Prozesse:</strong> API-getriebene Verwaltung für Import, Export und Massenmutationen</li>
+                <li><strong>Compliance-Instrument:</strong> Automatisierte Nachweise für gesetzliche Anforderungen auf Knopfdruck</li>
+                <li><strong>Nationale Integration:</strong> Synchronisation mit i14y, opendata.swiss, simap.ch und TERMDAT</li>
+                <li><strong>Data Governance:</strong> Eindeutige Rollen und Verantwortlichkeiten für jeden Datensatz</li>
+            </ul>
+            
+            <h2>Wer profitiert von einem Metadatenkatalog?</h2>
+            <ul>
+                <li><strong>Fachbereiche:</strong> Verständliche Dokumentation ihrer Geschäftsobjekte und klare Ansprechpartner</li>
+                <li><strong>IT-Architekten:</strong> Effiziente Verwaltung von Datenmodellen und Standards</li>
+                <li><strong>IT-Teams:</strong> Präzise technische Spezifikationen für Systemintegrationen</li>
+                <li><strong>Compliance:</strong> Automatisierte Berichte für Audits und Datenschutzbeauftragte</li>
+                <li><strong>Führung:</strong> Transparente Entscheidungsgrundlagen basierend auf verlässlichen Metadaten</li>
+                <li><strong>Externe Partner:</strong> Standardisierter Zugang zu öffentlichen Immobilien- und Beschaffungsdaten</li>
+            </ul>
 
-        // 1. Initialize
-        async function init() {
-            try {
-                const res = await fetch('data.json');
-                db = await res.json();
+            <h2>Nächste Schritte</h2>
+            <p>Wir werden den Katalog weiter verfeinern, indem wir uns an die Dateneigentümer wenden, bestehende Einträge aktualisieren und die Integration mit anderen Plattformen prüfen. Mit der Zeit wollen wir dieses Tool zu einer unverzichtbaren Ressource für interne und externe Partner machen, die datengesteuerte Innovationen in allen Bereichen ermöglicht.</p>
+
+            <h3>Weitere Informationen</h3>
+            <div class="info-link">
+                <a href="https://confluence-link-to-fachkonzept" target="_blank" class="footer-link" style="color:var(--text-black);">
+                    <span class="material-symbols-rounded">open_in_new</span>
+                    Fachkonzept Metadatenmanagement IMMO (Confluence)
+                </a>
+            </div>
+        `;
+
+        const HANDBUCH_CONTENT = `
+            <h2 class="page-title-h2">Das Metadatenmodell</h2>
+            <p>Das Metadatenmodell des BBL-Immobilienkatalogs basiert auf dem Swiss DCAT Application Profile (DCAT-AP CH v3.0.0) und erweitert dieses minimal um spezifische Komponenten für die Verwaltung von Immobiliendaten des Bundes.</p>
+            
+            <h3>Kernarchitektur</h3>
+            <p>Das Modell besteht aus fünf DCAT-Hauptklassen und einer BBL-spezifischen Erweiterung:</p>
+            
+            <p><strong>DCAT-Standardklassen:</strong></p>
+            <ul>
+                <li><strong>dcat:Catalog</strong> - BBL-Immobilienkatalog als Gesamtverzeichnis</li>
+                <li><strong>dcat:Dataset</strong> - Immobiliendatensammlungen (Gebäudestammdaten, Energiedaten)</li>
+                <li><strong>dcat:DatasetSeries</strong> - Zeitreihen (Jahresberichte, Kostenentwicklungen)</li>
+                <li><strong>dcat:Distribution</strong> - Bereitstellungsformen (Excel, API, PDF)</li>
+                <li><strong>dcat:DataService</strong> - Datendienste (SAP-Schnittstellen, REST-APIs)</li>
+            </ul>
+            
+            <p><strong>Schema-Modellierung (DCAT-konform):</strong></p>
+            <ul>
+                <li><strong>dct:Standard</strong> - Geschäftsobjekt-Schema (Gebäude, Grundstück, Mietvertrag)</li>
+                <li><strong>skos:ConceptScheme</strong> - Kontrollierte Vokabulare und Wertelisten (Gebäudetypen, Kantone)</li>
+                <li><strong>skos:Concept</strong> - Einzelne Werte in Wertelisten</li>
+            </ul>
+            
+            <p><strong>BBL-spezifische Erweiterung:</strong></p>
+            <ul>
+                <li><strong>bv:Attribute</strong> - Datenfelder mit Typdefinitionen, Validierungsregeln und Wertelisten-Referenzen</li>
+            </ul>
+
+            <img src="BBL DCAT-AP CH.avif" alt="Diagramm des BBL DCAT-AP CH Metadatenmodells" class="handbuch-img">
+            
+            <h3>Geschäftsobjekt-Modellierung</h3>
+            <pre style="background:#f2f2f2; padding:15px; border:1px solid #ddd; font-size:14px; overflow-x:auto; color:#444;">
+dct:Standard "Gebäude-Schema"
+├── dct:identifier: "STD-001"
+├── dct:title: "Gebäude"@de, "Bâtiment"@fr, "Edificio"@it
+├── dct:description: Definition gemäss KBOB/TERMDAT
+├── bv:hasAttribute:
+│   ├── bv:Attribute "Baujahr"
+│   │   ├── dct:type: "xsd:gYear"
+│   │   ├── dct:required: true
+│   │   └── dct:conformsTo → skos:ConceptScheme "Jahre"
+│   └── bv:Attribute "Gebäudetyp"
+│       └── dct:conformsTo → skos:ConceptScheme "Gebäudetypen"
+└── dcat:version: "3.0.0"
+            </pre>
+
+            <h3>Versionierung</h3>
+            <p>Alle Elemente unterstützen vollständige Versionskontrolle:</p>
+            <ul>
+                <li><strong>dcat:version</strong> - Semantische Versionierung (MAJOR.MINOR.PATCH)</li>
+                <li><strong>dct:issued</strong> - Erstveröffentlichung</li>
+                <li><strong>dct:modified</strong> - Letzte Änderung</li>
+                <li><strong>adms:versionNotes</strong> - Änderungsbeschreibung</li>
+                <li><strong>dcat:previousVersion</strong> - Verweis auf Vorgängerversion</li>
+            </ul>
+
+            <h3>Governance und Zugriffssteuerung</h3>
+            <p><strong>Rollenmodell:</strong></p>
+            <ul>
+                <li><strong>bv:dataOwner</strong> (foaf:Agent) - Fachverantwortlicher Immobilienmanagement</li>
+                <li><strong>bv:dataSteward</strong> (foaf:Agent) - Datenarchitekt/Datenmanager</li>
+                <li><strong>bv:dataCustodian</strong> (foaf:Agent) - Technischer Systembetreuer</li>
+            </ul>
+            
+            <p><strong>Zugriffsrechte und Compliance:</strong></p>
+            <ul>
+                <li><strong>dct:accessRights</strong> - Zugriffsbeschränkungen (öffentlich/intern/vertraulich)</li>
+                <li><strong>dct:license</strong> - Nutzungsbedingungen</li>
+                <li><strong>bv:dsgCategory</strong> - DSG-Klassifizierung</li>
+                <li><strong>bv:isgClassification</strong> - Informationssicherheitsstufe</li>
+                <li><strong>dcatap:applicableLegislation</strong> - Rechtliche Grundlagen (EMBAG, DSG)</li>
+            </ul>
+
+            <h3>Strukturbeispiel</h3>
+            <pre style="background:#f2f2f2; padding:15px; border:1px solid #ddd; font-size:14px; overflow-x:auto; color:#444;">
+BBL Immobilienkatalog (dcat:Catalog)
+├── Geschäftsobjekt-Schemas (Konzeptuelle Ebene)
+│   ├── dct:Standard "Gebäude-Schema" v3.0.0
+│   └── dct:Standard "Grundstück-Schema" v2.1.0
+│
+├── Datenattribute (Logische Ebene)
+│   ├── bv:Attribute "EGID" (required, unique)
+│   └── bv:Attribute "Nutzfläche" (decimal, m²)
+│
+├── Wertelisten (Referenzdaten)
+│   ├── skos:ConceptScheme "Gebäudetypen" v2.1.0
+│   └── skos:ConceptScheme "Kantone" v1.0.0
+│
+└── Datasets (Physische Ebene)
+    ├── dcat:Dataset "Gebäudestammdaten 2025"
+    │   └── dcat:Distribution (SAP-Export, REST-API)
+    └── dcat:DataService "IMMO-API v2"
+            </pre>
+            <p>Diese Struktur ermöglicht die vollständige Nachvollziehbarkeit der Datenherkunft, klare Verantwortlichkeiten und erfüllt alle regulatorischen Anforderungen der Bundesverwaltung.</p>
+
+            <h3>Weiterführende Informationen und Standards</h3>
+            <p><strong>Verwendete Standards und Spezifikationen:</strong></p>
+            <ul>
+                <li><strong>DCAT v3 (W3C Recommendation)</strong><br>Die Basis unseres Metadatenmodells. Besonders relevant sind die Qualified Forms für erweiterte Beziehungen:<br><a href="https://www.w3.org/TR/vocab-dcat-3/#qualified-forms" target="_blank" style="text-decoration:underline;">https://www.w3.org/TR/vocab-dcat-3/#qualified-forms</a></li>
                 
-                window.addEventListener('hashchange', handleRoute);
-                handleRoute(); // Initial load
+                <li><strong>Dublin Core Metadata Terms</strong><br>Definiert zentrale Properties wie dct:Standard, dct:conformsTo und dct:identifier:<br><a href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#Standard" target="_blank" style="text-decoration:underline;">https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#Standard</a></li>
+                
+                <li><strong>DCAT-AP CH (eCH-0200)</strong><br>Der Schweizer Anwendungsstandard für Datenportale der Bundesverwaltung:<br><a href="https://ech.ch/de/ech/ech-0200/3.0" target="_blank" style="text-decoration:underline;">https://ech.ch/de/ech/ech-0200/3.0</a><br><a href="https://www.dcat-ap.ch/" target="_blank" style="text-decoration:underline;">https://www.dcat-ap.ch/</a></li>
+                
+                <li><strong>SKOS (Simple Knowledge Organization System)</strong><br>Für die Modellierung von Wertelisten und kontrollierten Vokabularen:<br><a href="https://www.w3.org/TR/skos-reference/" target="_blank" style="text-decoration:underline;">https://www.w3.org/TR/skos-reference/</a></li>
+            </ul>
 
-                document.getElementById('searchInput').addEventListener('input', (e) => {
-                    currentFilter = e.target.value.toLowerCase();
-                    renderCurrentView();
+            <p><strong>Governance-Rollen gemäss NaDB</strong></p>
+            <p>Die Rollendefinitionen basieren auf der Nationalen Datenbewirtschaftung des BFS:</p>
+            <ul>
+                <li><strong>Data Owner</strong> - Fachliche Verantwortung</li>
+                <li><strong>Data Steward</strong> - Datenarchitektur und -qualität</li>
+                <li><strong>Data Custodian</strong> - Technischer Betrieb</li>
+            </ul>
+            
+            <p><strong>Zugriffsrechte und Compliance:</strong></p>
+            <ul>
+                <li><strong>dct:accessRights</strong> - Zugriffsbeschränkungen (öffentlich/intern/vertraulich)</li>
+                <li><strong>dct:license</strong> - Nutzungsbedingungen</li>
+                <li><strong>bv:dsgCategory</strong> - DSG-Klassifizierung</li>
+                <li><strong>bv:isgClassification</strong> - Informationssicherheitsstufe</li>
+                <li><strong>dcatap:applicableLegislation</strong> - Rechtliche Grundlagen (EMBAG, DSG)</li>
+            </ul>
+
+            <h3>Strukturbeispiel</h3>
+            <pre style="background:#f2f2f2; padding:15px; border:1px solid #ddd; font-size:14px; overflow-x:auto; color:#444;">
+BBL Immobilienkatalog (dcat:Catalog)
+├── Geschäftsobjekt-Schemas (Konzeptuelle Ebene)
+│   ├── dct:Standard "Gebäude-Schema" v3.0.0
+│   └── dct:Standard "Grundstück-Schema" v2.1.0
+│
+├── Datenattribute (Logische Ebene)
+│   ├── bv:Attribute "EGID" (required, unique)
+│   └── bv:Attribute "Nutzfläche" (decimal, m²)
+│
+├── Wertelisten (Referenzdaten)
+│   ├── skos:ConceptScheme "Gebäudetypen" v2.1.0
+│   └── skos:ConceptScheme "Kantone" v1.0.0
+│
+└── Datasets (Physische Ebene)
+    ├── dcat:Dataset "Gebäudestammdaten 2025"
+    │   └── dcat:Distribution (SAP-Export, REST-API)
+    └── dcat:DataService "IMMO-API v2"
+            </pre>
+            <p>Diese Struktur ermöglicht die vollständige Nachvollziehbarkeit der Datenherkunft, klare Verantwortlichkeiten und erfüllt alle regulatorischen Anforderungen der Bundesverwaltung.</p>
+        `;
+
+
+        // === JS OPTIMIERUNG: Kapselung in IIFE ===
+        (function() {
+            let db = [];
+            let currentView = 'grid'; // 'grid' or 'list'
+            let currentFilter = '';
+            let currentPage = 'model'; // 'model', 'about', or 'handbuch'
+
+            // 1. Initialize & Event Listener Setup
+            async function init() {
+                try {
+                    const res = await fetch('data.json');
+                    db = await res.json();
+                    
+                    // Pre-render static content
+                    document.getElementById('view-about').innerHTML = ABOUT_CONTENT;
+                    document.getElementById('view-handbuch').innerHTML = HANDBUCH_CONTENT;
+
+                    // Event-Listener für das Routing einrichten
+                    window.addEventListener('hashchange', handleRoute);
+                    handleRoute(); // Initial load
+
+                    // Event-Listener für Navigation Tabs
+                    document.querySelectorAll('.nav-tabs .nav-link').forEach(tab => {
+                        tab.addEventListener('click', (e) => {
+                            const page = e.currentTarget.dataset.page;
+                            window.location.hash = `#/${page}`;
+                        });
+                    });
+
+                    // Event-Listener für View Toggles
+                    document.querySelectorAll('.view-toggles .toggle-icon').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            switchView(e.currentTarget.dataset.view);
+                        });
+                    });
+
+                    // Event-Listener für Suche
+                    const searchInput = document.getElementById('searchInput');
+                    if(searchInput) {
+                        searchInput.addEventListener('input', (e) => {
+                            currentFilter = e.target.value.toLowerCase();
+                            renderCurrentView();
+                        });
+                    }
+
+                } catch (e) {
+                    console.error("Daten-Load fehlgeschlagen oder Parsing-Fehler: data.json muss existieren und gültiges JSON sein.", e);
+                }
+            }
+
+            // 2. Routing
+            function handleRoute() {
+                const hash = window.location.hash;
+                if (hash.startsWith('#/detail/')) {
+                    const id = hash.split('/')[2];
+                    renderDetail(id);
+                } else if (hash.startsWith('#/about')) {
+                    navigate('about');
+                } else if (hash.startsWith('#/handbuch')) {
+                    navigate('handbuch');
+                } else {
+                    navigate('model');
+                }
+            }
+
+            function setBreadcrumbs(page, title) {
+                const breadcrumbsEl = document.getElementById('breadcrumbs');
+                if (!breadcrumbsEl) return; 
+
+                let breadcrumbsHtml = `<a href="#/model">Startseite</a> <span>></span> `;
+                
+                if (page === 'model') {
+                    breadcrumbsHtml += `Logisches Datenmodell`;
+                } else if (page === 'about') {
+                    breadcrumbsHtml += `Über diesen Datenkatalog`;
+                } else if (page === 'handbuch') {
+                    breadcrumbsHtml += `Handbuch`;
+                } else if (page === 'detail') {
+                    breadcrumbsHtml += `<a href="#/model">Logisches Datenmodell</a> <span>></span> ${title}`;
+                }
+
+                breadcrumbsEl.innerHTML = breadcrumbsHtml;
+            }
+
+            function navigate(page, itemTitle = null) {
+                currentPage = page;
+
+                // Update tab highlighting
+                document.querySelectorAll('.nav-link').forEach(tab => tab.classList.remove('active'));
+                if (page === 'model' || page === 'detail') {
+                    const modelTab = document.getElementById('tab-model');
+                    if (modelTab) modelTab.classList.add('active');
+                } else {
+                    const specificTab = document.getElementById(`tab-${page}`);
+                    if (specificTab) specificTab.classList.add('active');
+                }
+
+                // Hide all main content views
+                const views = ['view-catalog', 'view-detail', 'view-about', 'view-handbuch'];
+                views.forEach(id => {
+                    const view = document.getElementById(id);
+                    if (view) view.classList.add('hidden');
                 });
-            } catch (e) {
-                console.error("Load failed", e);
-            }
-        }
-
-        // 2. Routing
-        function handleRoute() {
-            const hash = window.location.hash;
-            if (hash.startsWith('#/detail/')) {
-                const id = hash.split('/')[2];
-                renderDetail(id);
-            } else {
-                showCatalog();
-            }
-        }
-
-        function showCatalog() {
-            document.getElementById('view-catalog').classList.remove('hidden');
-            document.getElementById('view-detail').classList.add('hidden');
-            document.getElementById('breadcrumbs').innerHTML = `Startseite <span>></span> Logisches Datenmodell`;
-            renderCurrentView();
-        }
-
-        // 3. View Switching Logic
-        function switchView(view) {
-            currentView = view;
-            
-            // Update Toggle Buttons styling
-            const gridBtn = document.getElementById('btn-grid');
-            const listBtn = document.getElementById('btn-list');
-            
-            if(view === 'grid') {
-                gridBtn.className = 'toggle-icon active';
-                listBtn.className = 'toggle-icon inactive';
-                document.getElementById('grid-container').classList.remove('hidden');
-                document.getElementById('list-container').classList.add('hidden');
-            } else {
-                gridBtn.className = 'toggle-icon inactive';
-                listBtn.className = 'toggle-icon active';
-                document.getElementById('grid-container').classList.add('hidden');
-                document.getElementById('list-container').classList.remove('hidden');
-            }
-            renderCurrentView();
-        }
-
-        function renderCurrentView() {
-            const filtered = db.filter(i => i.title.toLowerCase().includes(currentFilter));
-            
-            if (currentView === 'grid') {
-                renderGrid(filtered);
-            } else {
-                renderList(filtered);
-            }
-        }
-
-        // Render Grid (Cards)
-        function renderGrid(items) {
-            const container = document.getElementById('grid-container');
-            container.innerHTML = items.map(item => `
-                <div class="card" onclick="window.location.hash='#/detail/${item.id}'">
-                    <div class="card-img-wrap">
-                        <img src="${item.image}" class="card-img">
-                        <div class="tags-overlay">
-                            ${(item.topTags || []).map(t => `<span class="tag-pill">${t}</span>`).join('')}
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">${item.title}</h3>
-                        <p class="card-desc">${item.description}</p>
-                        <div class="card-footer">
-                            <div class="tags-bottom">
-                                ${(item.bottomTags || []).map(t => `<span class="tag-pill">${t}</span>`).join('')}
-                            </div>
-                            <div class="btn-arrow">
-                                <span class="material-symbols-rounded">arrow_forward</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Render List (Table)
-        function renderList(items) {
-            const tbody = document.getElementById('list-body');
-            tbody.innerHTML = items.map(item => {
-                // Combine all tags for the list view
-                const allTags = [...(item.topTags || []), ...(item.bottomTags || [])];
                 
-                return `
-                <tr onclick="window.location.hash='#/detail/${item.id}'">
-                    <td class="col-title">${item.title}</td>
-                    <td class="col-desc">${item.description}</td>
-                    <td class="col-tags">
-                        ${allTags.map(t => `<span class="tag-pill" style="margin-left:5px; margin-bottom:5px;">${t}</span>`).join('')}
-                    </td>
-                </tr>
-            `}).join('');
-        }
+                // Show relevant view and update breadcrumbs/toolbar
+                const toolbar = document.querySelector('.toolbar');
+                const actionIcons = document.querySelector('.action-icons');
 
-        // 4. Detail View Renderer
-        function renderDetail(id) {
-            const item = db.find(x => x.id === id);
-            if (!item) return showCatalog();
-
-            document.getElementById('view-catalog').classList.add('hidden');
-            document.getElementById('view-detail').classList.remove('hidden');
-            
-            document.getElementById('breadcrumbs').innerHTML = `
-                <a href="#">Startseite</a> <span>></span> 
-                <a href="#">Logisches Datenmodell</a> <span>></span> 
-                ${item.title}
-            `;
-
-            document.getElementById('detail-title').textContent = item.title;
-            document.getElementById('detail-desc').textContent = item.fullDescription || item.description;
-            document.getElementById('detail-img').src = item.image;
-
-            const tagsContainer = document.getElementById('detail-tags');
-            tagsContainer.innerHTML = [
-                ...(item.topTags || []), 
-                ...(item.bottomTags || [])
-            ].map(t => `<span class="tag-pill">${t}</span>`).join('');
-
-            const metaContainer = document.getElementById('meta-list');
-            
-            // HARDCODED METADATA FIELDS DEFINITION
-            const metaFields = [
-                { key: 'fachliche_id', label: 'Fachliche ID' },
-                { key: 'guid', label: 'GUID' },
-                { key: 'termdat', label: 'TERMDAT' },
-                { key: 'fachbereich', label: 'Fachbereich' },
-                { key: 'system', label: 'Führendes System' },
-                { key: 'klassifizierung', label: 'Klassifizierung' },
-                { key: 'personenbezogen', label: 'Personenbezogene Daten' },
-                { key: 'kommentar', label: 'Kommentar' },
-                { key: 'version', label: 'Version' }
-            ];
-
-            if(item.meta) {
-                metaContainer.innerHTML = metaFields.map(field => {
-                    const val = item.meta[field.key] || '-'; // Default to "-"
-                    let displayVal = val;
-
-                    // Apply pill style to specific fields
-                    if (['klassifizierung', 'personenbezogen', 'fachliche_id'].includes(field.key) && val !== '-') {
-                        displayVal = `<span class="tag-pill">${val}</span>`;
-                    }
-                    // Apply link style to termdat
-                    if (field.key === 'termdat' && val.startsWith('http')) {
-                        displayVal = `<a href="${val}" target="_blank" style="text-decoration:underline;">${val}</a>`;
-                    }
-
-                    return `
-                        <div class="meta-row">
-                            <div class="meta-key">${field.label}</div>
-                            <div class="meta-val">${displayVal}</div>
-                        </div>
-                    `;
-                }).join('');
-            } else { 
-                metaContainer.innerHTML = '<div class="meta-row">Keine Metadaten</div>'; 
+                if (page === 'model') {
+                    document.getElementById('view-catalog')?.classList.remove('hidden');
+                    if (toolbar) toolbar.style.display = 'flex';
+                    if (actionIcons) actionIcons.style.display = 'flex';
+                    setBreadcrumbs('model');
+                    renderCurrentView();
+                } else if (page === 'about') {
+                    document.getElementById('view-about')?.classList.remove('hidden');
+                    if (toolbar) toolbar.style.display = 'none';
+                    if (actionIcons) actionIcons.style.display = 'flex';
+                    setBreadcrumbs('about');
+                } else if (page === 'handbuch') {
+                    document.getElementById('view-handbuch')?.classList.remove('hidden');
+                    if (toolbar) toolbar.style.display = 'none';
+                    if (actionIcons) actionIcons.style.display = 'flex';
+                    setBreadcrumbs('handbuch');
+                }
             }
 
-            const stdContainer = document.getElementById('standards-list');
-            if (item.standards && item.standards.length > 0) {
-                stdContainer.innerHTML = item.standards.map(s => `
-                    <div class="meta-row">
-                        <div class="meta-key">${s.name}</div>
-                        <div class="meta-val">${s.value}</div>
+            // 3. View Switching Logic 
+            function switchView(view) {
+                currentView = view;
+                
+                // Update Toggle Buttons styling
+                const gridBtn = document.getElementById('btn-grid');
+                const listBtn = document.getElementById('btn-list');
+
+                if(gridBtn && listBtn) {
+                    if(view === 'grid') {
+                        gridBtn.className = 'toggle-icon active';
+                        listBtn.className = 'toggle-icon inactive';
+                        document.getElementById('grid-container')?.classList.remove('hidden');
+                        document.getElementById('list-container')?.classList.add('hidden');
+                    } else {
+                        gridBtn.className = 'toggle-icon inactive';
+                        listBtn.className = 'toggle-icon active';
+                        document.getElementById('grid-container')?.classList.add('hidden');
+                        document.getElementById('list-container')?.classList.remove('hidden');
+                    }
+                }
+                renderCurrentView();
+            }
+
+            function renderCurrentView() {
+                const filtered = db.filter(i => 
+                    i.title.toLowerCase().includes(currentFilter) ||
+                    i.description.toLowerCase().includes(currentFilter) ||
+                    (i.topTags || []).some(t => t.toLowerCase().includes(currentFilter)) ||
+                    (i.bottomTags || []).some(t => t.toLowerCase().includes(currentFilter))
+                );
+                
+                if (currentView === 'grid') {
+                    renderGrid(filtered);
+                } else {
+                    renderList(filtered);
+                }
+            }
+
+            // 4. Render Grid (Cards)
+            function renderGrid(items) {
+                const container = document.getElementById('grid-container');
+                if (!container) return;
+
+                container.innerHTML = items.map(item => `
+                    <div class="card" data-id="${item.id}">
+                        <div class="card-img-wrap">
+                            <img src="${item.image}" class="card-img">
+                            <div class="tags-overlay">
+                                ${(item.topTags || []).map(t => `<span class="tag-pill">${t}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">${item.title}</h3>
+                            <p class="card-desc">${item.description}</p>
+                            <div class="card-footer">
+                                <div class="tags-bottom">
+                                    ${(item.bottomTags || []).slice(0, 3).map(t => `<span class="tag-pill">${t}</span>`).join('')}
+                                </div>
+                                <div class="btn-arrow">
+                                    <span class="material-symbols-rounded">arrow_forward</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 `).join('');
-            } else { stdContainer.innerHTML = ''; }
 
-            const attrBody = document.getElementById('attr-body');
-            if (item.attributes && item.attributes.length > 0) {
-                attrBody.innerHTML = item.attributes.map(a => {
-                    let keyBadge = '-';
-                    if (a.key === 'PK') keyBadge = '<span class="badge-pk">PK</span>';
-                    if (a.key === 'FK') keyBadge = '<span class="badge-fk">FK</span>';
-                    let listBadge = a.list === '-' ? '-' : `<span class="badge-val">${a.list}</span>`;
+                container.querySelectorAll('.card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        window.location.hash = `#/detail/${e.currentTarget.dataset.id}`;
+                    });
+                });
+            }
+
+            // 5. Render List (Table)
+            function renderList(items) {
+                const tbody = document.getElementById('list-body');
+                if (!tbody) return;
+
+                tbody.innerHTML = items.map(item => {
+                    const allTags = [...(item.topTags || []), ...(item.bottomTags || [])];
+                    
                     return `
-                        <tr>
-                            <td>${a.name}</td>
-                            <td><span class="fmt-pill">${a.format}</span></td>
-                            <td>${keyBadge}</td>
-                            <td>${listBadge}</td>
-                            <td>${a.desc}</td>
-                        </tr>
-                    `;
-                }).join('');
-            } else { attrBody.innerHTML = '<tr><td colspan="5">Keine Attribute definiert</td></tr>'; }
-        }
+                    <tr data-id="${item.id}">
+                        <td class="col-title">${item.title}</td>
+                        <td class="col-desc">${item.description}</td>
+                        <td class="col-tags">
+                            ${allTags.map(t => `<span class="tag-pill" style="margin-left:5px; margin-bottom:5px;">${t}</span>`).join('')}
+                        </td>
+                    </tr>
+                `}).join('');
 
-        // Expose switchView globally so onclick works
-        window.switchView = switchView;
+                tbody.querySelectorAll('tr').forEach(row => {
+                    row.addEventListener('click', (e) => {
+                        window.location.hash = `#/detail/${e.currentTarget.dataset.id}`;
+                    });
+                });
+            }
 
-        init();
+            // 6. Detail View Renderer
+            function renderDetail(id) {
+                const item = db.find(x => x.id === id);
+                if (!item) return navigate('model');
+
+                // Toggle Views
+                document.getElementById('view-catalog')?.classList.add('hidden');
+                document.getElementById('view-detail')?.classList.remove('hidden');
+                document.getElementById('view-about')?.classList.add('hidden');
+                document.getElementById('view-handbuch')?.classList.add('hidden');
+
+                document.querySelector('.toolbar').style.display = 'none';
+                document.querySelector('.action-icons').style.display = 'flex';
+                
+                setBreadcrumbs('detail', item.title);
+
+                // Update Content
+                document.getElementById('detail-title').textContent = item.title;
+                document.getElementById('detail-desc').textContent = item.fullDescription || item.description;
+                document.getElementById('detail-img').src = item.image || ''; // Fallback for image
+
+                const tagsContainer = document.getElementById('detail-tags');
+                if (tagsContainer) {
+                    tagsContainer.innerHTML = [
+                        ...(item.topTags || []), 
+                        ...(item.bottomTags || [])
+                    ].map(t => `<span class="tag-pill">${t}</span>`).join('');
+                }
+
+                const metaContainer = document.getElementById('meta-list');
+                const metaFields = [
+                    { key: 'fachliche_id', label: 'Fachliche ID' },
+                    { key: 'guid', label: 'GUID' },
+                    { key: 'termdat', label: 'TERMDAT' },
+                    { key: 'fachbereich', label: 'Fachbereich' },
+                    { key: 'system', label: 'Führendes System' },
+                    { key: 'klassifizierung', label: 'Klassifizierung' },
+                    { key: 'personenbezogen', label: 'Personenbezogene Daten' },
+                    { key: 'kommentar', label: 'Kommentar' },
+                    { key: 'version', label: 'Version' }
+                ];
+
+                if(metaContainer) {
+                    if(item.meta) {
+                        metaContainer.innerHTML = metaFields.map(field => {
+                            const val = item.meta[field.key] || '-';
+                            let displayVal = val;
+
+                            if (['klassifizierung', 'personenbezogen', 'fachliche_id'].includes(field.key) && val !== '-') {
+                                displayVal = `<span class="tag-pill">${val}</span>`;
+                            }
+                            
+                            // Check for links within meta-data and color them blue
+                            if (field.key === 'termdat' && typeof val === 'string' && val.startsWith('http')) {
+                                // Important: We specifically DO NOT use the color here, as the CSS selector handles it.
+                                displayVal = `<a href="${val}" target="_blank" style="text-decoration:underline;">${val}</a>`;
+                            }
+
+                            return `
+                                <div class="meta-row">
+                                    <div class="meta-key">${field.label}</div>
+                                    <div class="meta-val">${displayVal}</div>
+                                </div>
+                            `;
+                        }).join('');
+                    } else { 
+                        metaContainer.innerHTML = '<div class="meta-row">Keine Metadaten</div>'; 
+                    }
+                }
+
+
+                const stdContainer = document.getElementById('standards-list');
+                if (stdContainer) {
+                    if (item.standards && item.standards.length > 0) {
+                        stdContainer.innerHTML = item.standards.map(s => `
+                            <div class="meta-row">
+                                <div class="meta-key">${s.name}</div>
+                                <div class="meta-val">${s.value}</div>
+                            </div>
+                        `).join('');
+                    } else { stdContainer.innerHTML = '<div class="meta-row">Keine Standards definiert</div>'; }
+                }
+
+                const attrBody = document.getElementById('attr-body');
+                if (attrBody) {
+                    if (item.attributes && item.attributes.length > 0) {
+                        attrBody.innerHTML = item.attributes.map(a => {
+                            let keyBadge = a.key === '-' ? '-' : `<span class="tag-pill" title="Schlüsseltyp: ${a.key}">${a.key}</span>`;
+                            let listBadge = a.list === '-' ? '-' : `<span class="tag-pill" title="Werteliste: ${a.list}">${a.list}</span>`;
+                            
+                            return `
+                                <tr>
+                                    <td>${a.name}</td>
+                                    <td><span class="tag-pill">${a.format}</span></td>
+                                    <td>${keyBadge}</td>
+                                    <td>${listBadge}</td>
+                                    <td>${a.desc}</td>
+                                </tr>
+                            `;
+                        }).join('');
+                    } else { attrBody.innerHTML = '<tr><td colspan="5">Keine Attribute definiert</td></tr>'; }
+                }
+            }
+
+            // Initialisierung aufrufen
+            init();
+
+            // Expose ONLY necessary functions globally for HTML calls/DOM manipulation
+            window.navigate = navigate;
+            window.switchView = switchView; 
+        })();
     </script>
 </body>
 </html>
