@@ -317,3 +317,199 @@
     <div class="container">
         
         <div id="catalog-view">
+            <h2 class="page-title">Logisches Datenmodell</h2>
+
+            <div class="search-wrapper">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="search-input" placeholder="Suchen...">
+                </div>
+                <button class="filter-btn">
+                    <span>▼</span> Filter anzeigen
+                </button>
+            </div>
+
+            <div class="grid" id="card-grid">
+                </div>
+        </div>
+
+        <div id="detail-view">
+            <h2 class="page-title" id="detail-title">Titel</h2>
+            
+            <div class="detail-hero">
+                <div class="detail-text">
+                    <div id="detail-desc-container">
+                        </div>
+                    
+                    <div class="meta-section">
+                        <h4 style="margin-top:0">Metadaten</h4>
+                        <div id="meta-container">
+                            </div>
+                    </div>
+                </div>
+                
+                <div class="detail-image">
+                    <img id="detail-img-tag" src="" alt="Concept Image">
+                </div>
+            </div>
+
+            <h3 class="section-header">Attribute</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 20%">NAME</th>
+                        <th style="width: 15%">FORMAT</th>
+                        <th style="width: 10%">SCHLÜSSEL</th>
+                        <th style="width: 15%">WERTELISTE</th>
+                        <th>BESCHREIBUNG</th>
+                    </tr>
+                </thead>
+                <tbody id="attributes-table">
+                    </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        let db = []; // Holds the JSON data
+
+        // --- 1. INITIALIZATION ---
+        async function init() {
+            try {
+                const response = await fetch('data.json');
+                db = await response.json();
+                
+                // Check URL hash to see if we should load a detail page directly
+                handleRouting();
+
+                // Listen for hash changes (Back button support)
+                window.addEventListener('hashchange', handleRouting);
+
+                // Setup Search
+                document.getElementById('search-input').addEventListener('input', (e) => {
+                    renderGrid(filterData(e.target.value));
+                });
+
+            } catch (error) {
+                console.error("Error loading data:", error);
+                document.getElementById('card-grid').innerHTML = "<p>Fehler beim Laden der Daten. Bitte stellen Sie sicher, dass 'data.json' vorhanden ist.</p>";
+            }
+        }
+
+        // --- 2. ROUTING ---
+        function handleRouting() {
+            const hash = window.location.hash;
+            if (hash && hash.startsWith('#/concept/')) {
+                const id = hash.replace('#/concept/', '');
+                showDetail(id);
+            } else {
+                showCatalog();
+            }
+        }
+
+        // --- 3. RENDER CATALOG ---
+        function showCatalog() {
+            document.getElementById('catalog-view').classList.remove('hidden');
+            document.getElementById('detail-view').classList.add('hidden');
+            document.getElementById('breadcrumbs').innerHTML = 'Startseite <span>></span> Logisches Datenmodell';
+            renderGrid(db);
+        }
+
+        function filterData(query) {
+            const lower = query.toLowerCase();
+            return db.filter(item => 
+                item.title.toLowerCase().includes(lower) || 
+                item.shortDescription.toLowerCase().includes(lower)
+            );
+        }
+
+        function renderGrid(items) {
+            const grid = document.getElementById('card-grid');
+            grid.innerHTML = '';
+
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.onclick = () => window.location.hash = `#/concept/${item.id}`;
+
+                const tagsHtml = item.tags.map(t => `<span class="tag">${t}</span>`).join('');
+
+                card.innerHTML = `
+                    <div class="card-img-container">
+                        <img src="${item.image}" class="card-img">
+                        <div class="tag-container">${tagsHtml}</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">${item.title}</div>
+                        <div class="card-desc">${item.shortDescription}</div>
+                        <div class="card-footer">
+                            <div class="arrow-circle">→</div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // --- 4. RENDER DETAIL ---
+        function showDetail(id) {
+            const item = db.find(x => x.id === id);
+            if (!item) return showCatalog();
+
+            document.getElementById('catalog-view').classList.add('hidden');
+            document.getElementById('detail-view').classList.remove('hidden');
+            
+            // Update Breadcrumbs
+            document.getElementById('breadcrumbs').innerHTML = `
+                <a href="#">Startseite</a> <span>></span> 
+                <a href="#">Logisches Datenmodell</a> <span>></span> 
+                ${item.title}
+            `;
+
+            // Populate Content
+            document.getElementById('detail-title').innerText = item.title;
+            document.getElementById('detail-desc-container').innerText = item.description;
+            document.getElementById('detail-img-tag').src = item.image;
+
+            // Populate Metadata
+            const metaContainer = document.getElementById('meta-container');
+            metaContainer.innerHTML = `
+                <div class="meta-row"><span class="meta-label">Fachliche ID</span><span>${item.meta.fachliche_id}</span></div>
+                <div class="meta-row"><span class="meta-label">GUID</span><span>${item.meta.guid}</span></div>
+                <div class="meta-row"><span class="meta-label">TERMDAT</span><span><a href="${item.meta.termdat}" target="_blank">${item.meta.termdat}</a></span></div>
+                <div class="meta-row"><span class="meta-label">Fachbereich</span><span>${item.meta.fachbereich}</span></div>
+                <div class="meta-row"><span class="meta-label">Führendes System</span><span>${item.meta.system}</span></div>
+                <div class="meta-row"><span class="meta-label">Klassifizierung</span><span><span style="border:1px solid #999; padding:2px 8px; border-radius:10px; font-size:11px;">${item.meta.klassifizierung}</span></span></div>
+            `;
+
+            // Populate Attributes Table
+            const tbody = document.getElementById('attributes-table');
+            tbody.innerHTML = item.attributes.map(attr => {
+                let keyBadge = '-';
+                if(attr.key === 'PK') keyBadge = '<span class="badge-pk">PK</span>';
+                if(attr.key === 'FK') keyBadge = '<span class="badge-fk">FK</span>';
+
+                let listBadge = attr.list;
+                if(attr.list !== '-') listBadge = `<span class="badge-list">${attr.list}</span>`;
+
+                return `
+                    <tr>
+                        <td>${attr.name}</td>
+                        <td><span style="border:1px solid #ccc; padding:2px 8px; border-radius:10px; font-size:12px;">${attr.format}</span></td>
+                        <td>${keyBadge}</td>
+                        <td>${listBadge}</td>
+                        <td>${attr.desc}</td>
+                    </tr>
+                `;
+            }).join('');
+            
+            window.scrollTo(0,0);
+        }
+
+        // Start App
+        init();
+
+    </script>
+</body>
+</html>
