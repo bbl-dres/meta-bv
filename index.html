@@ -8,19 +8,36 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
 
     <style>
-        /* --- 1. VARIABLES & RESET --- */
+        /* === 1. VARIABLES & RESET === */
         :root {
             --swiss-red: #DC0018;
-            --text-black: #222222;
-            --text-dark: #333333;
-            --text-light: #666666;
-            --border: #CCCCCC;
+            --text-black: #222;
+            --text-dark: #333;
+            --text-light: #666;
+            --border: #CCC;
+            --border-light: #E5E5E5;
             --bg-gray: #F5F5F5;
+            --bg-hover: #F2F4F5;
             --footer-bg: #454545;
-            --link-color: #0066CC;
+            --link-color: #06C;
             --font-stack: "Frutiger", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            
+            --spacing-xs: 8px;
+            --spacing-sm: 15px;
+            --spacing-md: 20px;
+            --spacing-lg: 30px;
+            --spacing-xl: 50px;
+            
+            --radius-sm: 3px;
+            --radius-md: 4px;
+            --radius-pill: 20px;
+            
+            --shadow-card: 0 2px 5px rgba(0,0,0,0.02);
+            --shadow-card-hover: 0 10px 25px rgba(0,0,0,0.08);
         }
 
+        *, *::before, *::after { box-sizing: border-box; }
+        
         body { 
             margin: 0; 
             font-family: var(--font-stack); 
@@ -32,9 +49,7 @@
             min-height: 100vh;
         }
         
-        * { box-sizing: border-box; }
         a { text-decoration: none; color: inherit; cursor: pointer; }
-
         .hidden { display: none !important; }
 
         .material-symbols-rounded {
@@ -43,20 +58,18 @@
             user-select: none;
         }
 
-        /* --- 2. LAYOUT UTILITIES & CONTAINERS --- */
+        /* === 2. LAYOUT === */
         .u-max-width {
             max-width: 1160px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 var(--spacing-md);
             width: 100%;
         }
 
-        .container {
-            flex: 1; 
-        }
+        .container { flex: 1; }
 
-        /* --- 3. HEADER & BRANDING --- */
-        header { padding-top: 30px; padding-bottom: 20px; }
+        /* === 3. HEADER & BRANDING === */
+        header { padding-top: var(--spacing-lg); padding-bottom: var(--spacing-md); }
         
         .header-inner {
             display: flex;
@@ -64,16 +77,15 @@
             justify-content: space-between;
         }
 
-        .branding { display: flex; align-items: flex-start; gap: 20px; }
+        .branding { display: flex; align-items: flex-start; gap: var(--spacing-md); }
         
         .logo-wrapper {
             width: 40px; 
             height: 40px; 
-            display: block;
             flex-shrink: 0;
         }
         
-        .logo-wrapper .logo-img-external {
+        .logo-wrapper img {
             width: 100%;
             height: 100%;
             display: block;
@@ -82,7 +94,7 @@
 
         .branding-text {
             border-left: 1px solid #999;
-            padding-left: 20px;
+            padding-left: var(--spacing-md);
             font-size: 16px;
             line-height: 1.3;
         }
@@ -98,7 +110,6 @@
         }
         
         .lang-selector { 
-            font-weight: 400; 
             display: flex; 
             align-items: center; 
             gap: 2px; 
@@ -106,18 +117,17 @@
         }
         .lang-selector .material-symbols-rounded { font-size: 18px; }
 
-        /* --- 4. NAVIGATION TABS --- */
+        /* === 4. NAVIGATION === */
         .nav-tabs {
             margin-top: 45px;
-            border-bottom: 1px solid #E5E5E5;
+            border-bottom: 1px solid var(--border-light);
             display: flex;
             gap: 35px;
         }
         .nav-link {
-            padding-bottom: 15px;
+            padding-bottom: var(--spacing-sm);
             font-size: 16px;
             color: var(--text-black);
-            position: relative;
             cursor: pointer;
         }
         .nav-link.active {
@@ -127,7 +137,7 @@
             margin-bottom: -1px;
         }
 
-        /* --- 5. BREADCRUMBS & ACTION ICONS --- */
+        /* === 5. BREADCRUMBS & ACTIONS === */
         .sub-header {
             display: flex;
             justify-content: space-between;
@@ -135,23 +145,23 @@
             padding: 25px 0;
         }
         .breadcrumbs { font-size: 14px; color: var(--text-light); }
-        .breadcrumbs span { margin: 0 8px; color: #999; }
+        .breadcrumbs span { margin: 0 var(--spacing-xs); color: #999; }
         .breadcrumbs a:hover { text-decoration: underline; }
 
         .action-icons { display: flex; gap: 12px; color: #666; }
         .icon-btn { 
             cursor: pointer; 
-            padding: 8px;
+            padding: var(--spacing-xs);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: background-color 0.2s;
         }
-        .icon-btn:hover { background-color: #F5F5F5; color: var(--swiss-red); }
+        .icon-btn:hover { background-color: var(--bg-gray); color: var(--swiss-red); }
         .icon-btn .material-symbols-rounded { font-size: 22px; }
 
-        /* --- 6. PAGE TITLE & CONTROLS --- */
+        /* === 6. PAGE TITLE & TOOLBAR === */
         h1.page-title {
             font-size: 32px;
             font-weight: 400;
@@ -172,281 +182,270 @@
             align-items: center;
             margin-bottom: 40px;
         }
-        .search-group { display: flex; gap: 15px; width: 100%; max-width: 500px; }
+        .search-group { display: flex; gap: var(--spacing-sm); width: 100%; max-width: 500px; }
         .input-wrapper { position: relative; flex-grow: 1; }
         .input-wrapper input {
-            width: 100%; padding: 10px 15px 10px 48px;
-            border: 1px solid #999; border-radius: 3px; font-size: 16px; height: 46px;
+            width: 100%; 
+            padding: 10px var(--spacing-sm) 10px 48px;
+            border: 1px solid #999; 
+            border-radius: var(--radius-sm); 
+            font-size: 16px; 
+            height: 46px;
         }
         .search-icon {
-            position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-            color: #666; pointer-events: none; font-size: 22px;
+            position: absolute; 
+            left: 14px; 
+            top: 50%; 
+            transform: translateY(-50%);
+            color: #666; 
+            pointer-events: none; 
+            font-size: 22px;
         }
         
         .btn-filter {
-            height: 46px; padding: 0 24px; background: white;
-            border: 1px solid #333; border-radius: 3px;
-            font-size: 15px; font-weight: bold;
-            display: flex; align-items: center; gap: 8px; cursor: pointer;
+            height: 46px; 
+            padding: 0 24px; 
+            background: white;
+            border: 1px solid var(--text-dark); 
+            border-radius: var(--radius-sm);
+            font-size: 15px; 
+            font-weight: bold;
+            display: flex; 
+            align-items: center; 
+            gap: var(--spacing-xs); 
+            cursor: pointer;
         }
-        .btn-filter .material-symbols-rounded { font-size: 20px; }
 
         .view-toggles { display: flex; gap: 10px; }
         .toggle-icon {
-            width: 46px; height: 46px; background: #999;
-            display: flex; align-items: center; justify-content: center;
-            color: white; border-radius: 3px; cursor: pointer;
+            width: 46px; 
+            height: 46px;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            border-radius: var(--radius-sm); 
+            cursor: pointer;
             transition: background-color 0.2s;
         }
-        .toggle-icon:hover { opacity: 0.8; }
         .toggle-icon.active { background: #666; color: white; pointer-events: none; }
-        .toggle-icon.inactive { background: white; color: #333; border: 1px solid #ccc; }
+        .toggle-icon.inactive { background: white; color: var(--text-dark); border: 1px solid var(--border); }
+        .toggle-icon.inactive:hover { background: var(--bg-gray); }
 
-        /* --- 7. CARD/TAGS/DETAIL --- */
+        /* === 7. CARDS & GRID === */
         .grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
+            gap: var(--spacing-lg);
             margin-bottom: 80px;
         }
         @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
 
         .card {
             background: white;
-            border: 1px solid #E5E5E5;
-            border-radius: 4px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
             overflow: hidden;
-            display: flex; flex-direction: column;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            display: flex; 
+            flex-direction: column;
+            box-shadow: var(--shadow-card);
             transition: all 0.2s;
             cursor: pointer;
+            max-width: 540px;
+            width: 100%;
         }
         .card:hover {
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            box-shadow: var(--shadow-card-hover);
             transform: translateY(-3px);
-            border-color: #ccc;
+            border-color: var(--border);
         }
         .card-img-wrap { height: 220px; position: relative; background: #eee; }
         .card-img { width: 100%; height: 100%; object-fit: cover; }
-        .tags-overlay { position: absolute; top: 20px; left: 20px; display: flex; gap: 10px; }
-        
-        /* === UNIVERSAL TAG PILL STYLE === */
+        .tags-overlay { position: absolute; top: var(--spacing-md); left: var(--spacing-md); display: flex; gap: 10px; }
+
+        .card-body { padding: var(--spacing-lg); display: flex; flex-direction: column; flex-grow: 1; }
+        .card-title { font-size: 16px; font-weight: 700; margin: 0 0 var(--spacing-sm) 0; color: var(--text-black); }
+        .card-desc { font-size: 16px; line-height: 1.5; color: var(--text-black); margin: 0 0 35px 0; flex-grow: 1; }
+        .card-footer { display: flex; justify-content: space-between; align-items: flex-end; }
+        .tags-bottom { display: flex; flex-wrap: wrap; gap: var(--spacing-xs); }
+
+        .btn-arrow {
+            width: 40px; 
+            height: 40px; 
+            border: 1px solid var(--border-light); 
+            border-radius: 2px;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            color: var(--swiss-red); 
+            flex-shrink: 0; 
+            transition: all 0.2s;
+        }
+        .btn-arrow:hover { border-color: var(--swiss-red); background: var(--swiss-red); color: white; }
+
+        /* === 8. TAG PILL (Universal) === */
         .tag-pill {
             background: white;
             border: 1px solid #999;
-            padding: 8px 14px;
-            border-radius: 20px;
+            padding: var(--spacing-xs) 14px;
+            border-radius: var(--radius-pill);
             font-size: 14px;
             color: #444;
             font-weight: 400;
             cursor: pointer;
-            text-decoration: none;
             display: inline-block;
             white-space: nowrap;
             transition: all 0.2s ease;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
         .tag-pill:hover {
-            background-color: #E5E5E5;
+            background-color: var(--border-light);
             border-color: #666;
             color: #000;
         }
 
-        .card-body { padding: 30px; display: flex; flex-direction: column; flex-grow: 1; }
-        h3.card-title { 
-            font-size: 16px; font-weight: 700; margin: 0 0 15px 0; color: var(--text-black); 
-        }
-        p.card-desc { 
-            font-size: 16px; line-height: 1.5; color: var(--text-black); margin: 0 0 35px 0; flex-grow: 1; 
-        }
-        .card-footer { display: flex; justify-content: space-between; align-items: flex-end; }
-        .tags-bottom { display: flex; flex-wrap: wrap; gap: 8px; }
-
-        .btn-arrow {
-            width: 40px; height: 40px; border: 1px solid #E5E5E5; border-radius: 2px;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--swiss-red); flex-shrink: 0; transition: all 0.2s;
-        }
-        .btn-arrow:hover { border-color: var(--swiss-red); background: var(--swiss-red); color: white; }
-
-        /* --- 8. LIST VIEW --- */
+        /* === 9. LIST VIEW === */
         .list-table { width: 100%; border-collapse: collapse; font-size: 15px; margin-bottom: 80px; }
         .list-table th {
-            text-align: left; background: #F2F4F5; padding: 15px;
-            color: #666; font-size: 13px; font-weight: 700; text-transform: uppercase;
+            text-align: left; 
+            background: var(--bg-hover); 
+            padding: var(--spacing-sm);
+            color: #666; 
+            font-size: 13px; 
+            font-weight: 700; 
+            text-transform: uppercase;
         }
-        .list-table td { padding: 20px 15px; border-bottom: 1px solid #E5E5E5; vertical-align: middle; }
+        .list-table td { 
+            padding: var(--spacing-md) var(--spacing-sm); 
+            border-bottom: 1px solid var(--border-light); 
+            vertical-align: middle; 
+        }
         .list-table tbody tr { cursor: pointer; transition: background-color 0.1s; }
-        .list-table tbody tr:hover { background-color: #F2F4F5; }
+        .list-table tbody tr:hover { background-color: var(--bg-hover); }
         
         .col-title { font-weight: 700; font-size: 16px; color: var(--text-black); width: 25%; }
         .col-desc { color: var(--text-black); line-height: 1.5; }
         .col-tags { width: 30%; text-align: right; }
 
-        /* --- DETAIL VIEW SPECIFIC & CONTENT LINKS --- */
-        #view-about a:not(.footer-link), 
-        #view-handbuch a:not(.footer-link),
-        #view-concept-detail a:not(.footer-link),
-        #view-dataset-detail a:not(.footer-link) {
-            color: var(--link-color);
-            text-decoration: underline;
-        }
-        #view-about a:not(.footer-link):hover,
-        #view-handbuch a:not(.footer-link):hover,
-        #view-concept-detail a:not(.footer-link):hover,
-        #view-dataset-detail a:not(.footer-link):hover {
-            text-decoration: none;
-        }
-
-        .detail-hero { display: flex; gap: 50px; margin-bottom: 60px; margin-top: 20px; }
+        /* === 10. DETAIL VIEW === */
+        .detail-hero { display: flex; gap: var(--spacing-xl); margin-bottom: 60px; margin-top: var(--spacing-md); }
         .detail-info { flex: 1; }
         .detail-image-box { flex: 1; max-width: 600px; }
         .detail-image-box img { width: 100%; height: auto; border-radius: 2px; }
         .detail-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; }
-        .detail-desc { font-size: 16px; line-height: 1.6; margin-bottom: 30px; }
+        .detail-desc { font-size: 16px; line-height: 1.6; margin-bottom: var(--spacing-lg); }
 
         .responsible-box {
-            background: #F5F5F5; padding: 30px; margin: 50px 0; border-left: 5px solid #ddd;
+            background: var(--bg-gray); 
+            padding: var(--spacing-lg); 
+            margin: var(--spacing-xl) 0; 
+            border-left: 5px solid #ddd;
         }
-        .box-title { font-weight: bold; margin-bottom: 8px; font-size: 18px; }
+        .box-title { font-weight: bold; margin-bottom: var(--spacing-xs); font-size: 18px; }
         .box-text { font-size: 16px; font-style: italic; color: #666; }
 
-        .section-title { font-size: 24px; font-weight: 400; margin: 50px 0 25px 0; }
-        
-        .meta-list { border-top: 1px solid #E5E5E5; }
-        .meta-row {
-            display: flex; padding: 16px 15px; border-bottom: 1px solid #E5E5E5;
-            font-size: 16px; align-items: center; transition: background-color 0.1s;
-        }
-        .meta-row:hover { background-color: #F2F4F5; }
-        .meta-key { width: 280px; font-weight: 400; flex-shrink: 0; color: var(--text-black); }
-        .meta-val { color: #333; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; line-height: 1.5; }
-        
-        /* Attributes Table */
-        .attr-table { width: 100%; border-collapse: collapse; font-size: 16px; margin-top: 20px; }
-        .attr-table th {
-            text-align: left; background: #F2F4F5; padding: 16px;
-            color: #666; font-size: 13px; font-weight: 700; text-transform: uppercase;
-        }
-        .attr-table td { padding: 16px; border-bottom: 1px solid #E5E5E5; vertical-align: top; line-height: 1.5; }
-        .attr-table tbody tr:hover { background-color: #F2F4F5; }
+        .section-title { font-size: 24px; font-weight: 400; margin: var(--spacing-xl) 0 25px 0; }
 
-        /* --- Distribution Accordion Styles --- */
-        .distribution-item {
-            border-bottom: 1px solid #E5E5E5;
+        /* === 11. DATA ROWS (Shared pattern) === */
+        .data-row {
+            display: flex;
+            padding: 16px var(--spacing-sm);
+            border-bottom: 1px solid var(--border-light);
+            font-size: 16px;
+            align-items: center;
+            transition: background-color 0.1s;
         }
+        .data-row:hover { background-color: var(--bg-hover); }
+        .data-row-key { width: 280px; font-weight: 400; flex-shrink: 0; color: var(--text-black); }
+        .data-row-val { color: var(--text-dark); display: flex; align-items: center; flex-wrap: wrap; gap: var(--spacing-xs); line-height: 1.5; }
+
+        .meta-list, .distributions-list, .publications-list { border-top: 1px solid var(--border-light); }
+
+        /* === 12. DISTRIBUTION ACCORDION === */
+        .distribution-item { border-bottom: 1px solid var(--border-light); }
+        
         .distribution-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 15px;
+            padding: 16px var(--spacing-sm);
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.1s;
         }
-        .distribution-header:hover { background-color: #F2F4F5; }
-        .distribution-left { 
-            color: var(--text-black); 
-            flex-grow: 1;
-        }
+        .distribution-header:hover { background-color: var(--bg-hover); }
+        
+        .distribution-left { color: var(--text-black); flex-grow: 1; }
         .distribution-right {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: var(--spacing-xs);
             color: var(--text-light);
-        }
-        .distribution-right .material-symbols-rounded {
-            font-size: 20px;
-            transition: transform 0.2s ease;
         }
         .distribution-right .expand-icon {
             font-size: 24px;
+            transition: transform 0.2s ease;
         }
-        .distribution-item.expanded .expand-icon {
-            transform: rotate(180deg);
-        }
-        .distribution-format {
-            font-size: 14px;
-            font-weight: 500;
-        }
+        .distribution-item.expanded .expand-icon { transform: rotate(180deg); }
+        .distribution-format { font-size: 14px; font-weight: 500; }
+        
         .distribution-details {
             display: none;
-            padding: 0 15px 20px 15px;
+            padding: 0 var(--spacing-sm) var(--spacing-md) var(--spacing-sm);
             background-color: #FAFAFA;
         }
-        .distribution-item.expanded .distribution-details {
-            display: block;
-        }
+        .distribution-item.expanded .distribution-details { display: block; }
+        
         .distribution-detail-row {
             display: flex;
             padding: 12px 0;
-            border-bottom: 1px solid #E5E5E5;
+            border-bottom: 1px solid var(--border-light);
             font-size: 15px;
         }
-        .distribution-detail-row:last-child {
-            border-bottom: none;
-        }
-        .distribution-detail-key {
-            width: 200px;
-            flex-shrink: 0;
-            color: var(--text-light);
-        }
-        .distribution-detail-val {
-            color: var(--text-black);
-            word-break: break-all;
-        }
-        .distribution-detail-val a {
-            color: var(--link-color);
-            text-decoration: underline;
-        }
-        .distribution-detail-val a:hover {
-            text-decoration: none;
-        }
+        .distribution-detail-row:last-child { border-bottom: none; }
+        .distribution-detail-key { width: 200px; flex-shrink: 0; color: var(--text-light); }
+        .distribution-detail-val { color: var(--text-black); word-break: break-all; }
 
-        /* --- Publication Row Styles --- */
-        .publication-row {
-            display: flex;
-            padding: 16px 15px;
-            border-bottom: 1px solid #E5E5E5;
-            font-size: 16px;
-            transition: background-color 0.1s;
-        }
-        .publication-row:hover { background-color: #F2F4F5; }
-        .publication-key { 
-            width: 280px; 
-            font-weight: 400; 
-            flex-shrink: 0; 
-            color: var(--text-black); 
-        }
-        .publication-val { 
-            color: #333; 
-        }
-        
-        /* --- ABOUT & HANDBUCH VIEW SPECIFIC --- */
-        #view-about, #view-handbuch { padding-bottom: 80px; }
-        #view-about h2, #view-handbuch h2 { 
-            font-size: 28px; 
+        /* === 13. ATTRIBUTES TABLE === */
+        .attr-table { width: 100%; border-collapse: collapse; font-size: 16px; margin-top: var(--spacing-md); }
+        .attr-table th {
+            text-align: left; 
+            background: var(--bg-hover); 
+            padding: 16px;
+            color: #666; 
+            font-size: 13px; 
             font-weight: 700; 
-            margin-top: 50px; 
-            margin-bottom: 20px; 
+            text-transform: uppercase;
         }
-        #view-about h3, #view-handbuch h3 { font-size: 24px; font-weight: 700; margin-top: 40px; margin-bottom: 15px; }
-        #view-about p, #view-handbuch p { font-size: 16px; line-height: 1.6; margin-bottom: 20px; }
-        #view-about ul, #view-handbuch ul { list-style-type: disc; padding-left: 25px; margin-bottom: 20px; }
-        #view-about li, #view-handbuch li { font-size: 16px; line-height: 1.6; margin-bottom: 8px; }
-        #view-about strong, #view-handbuch strong { font-weight: 700; }
-        #view-about .info-link, #view-handbuch .info-link { margin-top: 30px; }
+        .attr-table td { 
+            padding: 16px; 
+            border-bottom: 1px solid var(--border-light); 
+            vertical-align: top; 
+            line-height: 1.5; 
+        }
+        .attr-table tbody tr:hover { background-color: var(--bg-hover); }
 
+        /* === 14. CONTENT PAGES (About, Handbuch) === */
+        .content-page { padding-bottom: 80px; }
+        .content-page h2 { font-size: 28px; font-weight: 700; margin-top: var(--spacing-xl); margin-bottom: var(--spacing-md); }
+        .content-page h3 { font-size: 24px; font-weight: 700; margin-top: 40px; margin-bottom: var(--spacing-sm); }
+        .content-page p { font-size: 16px; line-height: 1.6; margin-bottom: var(--spacing-md); }
+        .content-page ul { list-style-type: disc; padding-left: 25px; margin-bottom: var(--spacing-md); }
+        .content-page li { font-size: 16px; line-height: 1.6; margin-bottom: var(--spacing-xs); }
+        .content-page strong { font-weight: 700; }
+        .content-page .info-link { margin-top: var(--spacing-lg); }
+        .content-page a:not(.footer-link) { color: var(--link-color); text-decoration: underline; }
+        .content-page a:not(.footer-link):hover { text-decoration: none; }
+        
         .handbuch-img {
             display: block;
             max-width: 100%;
             height: auto;
-            margin: 30px 0;
-            border: 1px solid #E5E5E5;
-            border-radius: 4px;
+            margin: var(--spacing-lg) 0;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
         }
 
-        /* --- 9. FOOTER --- */
+        /* === 15. FOOTER === */
         footer {
             background-color: var(--footer-bg);
             color: white;
@@ -461,23 +460,27 @@
             align-items: center;
             font-size: 14px;
         }
-        .footer-left {
-            display: flex;
-            gap: 30px;
-        }
+        .footer-left { display: flex; gap: var(--spacing-lg); }
         .footer-link {
             color: white;
-            text-decoration: none;
             display: flex;
             align-items: center;
             gap: 6px;
         }
         .footer-link:hover { text-decoration: underline; }
         .footer-link .material-symbols-rounded { font-size: 16px; }
-        .footer-right {
-            color: #ccc;
-        }
+        .footer-right { color: #ccc; }
 
+        /* === 16. DETAIL VIEW LINKS === */
+        #view-concept-detail a:not(.footer-link),
+        #view-dataset-detail a:not(.footer-link) {
+            color: var(--link-color);
+            text-decoration: underline;
+        }
+        #view-concept-detail a:not(.footer-link):hover,
+        #view-dataset-detail a:not(.footer-link):hover {
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -487,7 +490,7 @@
             <div class="header-inner">
                 <div class="branding">
                     <div class="logo-wrapper">
-                        <img src="https://raw.githubusercontent.com/davras5/meta-bv/212ee3a88abba781fd699543b02df718e68fde63/Coat_of_arms_of_Switzerland.svg.png" alt="Wappen der Schweiz" class="logo-img-external">
+                        <img src="https://raw.githubusercontent.com/davras5/meta-bv/212ee3a88abba781fd699543b02df718e68fde63/Coat_of_arms_of_Switzerland.svg.png" alt="Wappen der Schweiz">
                     </div>
                     <div class="branding-text">
                         <strong>Bundesamt für Bauten und Logistik BBL</strong>
@@ -502,12 +505,12 @@
                 </div>
             </div>
 
-            <div class="nav-tabs" id="nav-tabs">
-                <div id="tab-concept" class="nav-link active" data-page="concept">Konzepte</div>
-                <div id="tab-dataset" class="nav-link" data-page="dataset">Datensätze</div>
-                <div id="tab-about" class="nav-link" data-page="about">über diesen Datenkatalog</div>
-                <div id="tab-handbuch" class="nav-link" data-page="handbuch">Handbuch</div>
-            </div>
+            <nav class="nav-tabs" id="nav-tabs">
+                <div class="nav-link active" data-page="concept">Konzepte</div>
+                <div class="nav-link" data-page="dataset">Datensätze</div>
+                <div class="nav-link" data-page="about">über diesen Datenkatalog</div>
+                <div class="nav-link" data-page="handbuch">Handbuch</div>
+            </nav>
         </header>
 
         <div class="sub-header">
@@ -521,15 +524,14 @@
         </div>
 
         <main>
-            <!-- Konzepte Catalog View -->
+            <!-- Catalog Views -->
             <div id="view-concept-catalog">
                 <h1 class="page-title">Konzepte</h1>
-                
-                <div class="toolbar" id="toolbar-concept">
+                <div class="toolbar">
                     <div class="search-group">
                         <div class="input-wrapper">
                             <span class="material-symbols-rounded search-icon">search</span>
-                            <input type="text" id="conceptSearchInput" placeholder="Suchen">
+                            <input type="text" id="search-concept" placeholder="Suchen">
                         </div>
                         <button class="btn-filter">
                             <span class="material-symbols-rounded">filter_list</span>
@@ -537,18 +539,16 @@
                         </button>
                     </div>
                     <div class="view-toggles">
-                        <div id="btn-concept-grid" class="toggle-icon active" data-view="grid">
+                        <div class="toggle-icon active" data-view="grid" data-type="concept">
                             <span class="material-symbols-rounded">grid_view</span>
                         </div>
-                        <div id="btn-concept-list" class="toggle-icon inactive" data-view="list">
+                        <div class="toggle-icon inactive" data-view="list" data-type="concept">
                             <span class="material-symbols-rounded">view_list</span>
                         </div>
                     </div>
                 </div>
-
-                <div id="concept-grid-container" class="grid"></div>
-
-                <table id="concept-list-container" class="list-table hidden">
+                <div id="concept-grid" class="grid"></div>
+                <table id="concept-list" class="list-table hidden">
                     <thead>
                         <tr>
                             <th>KONZEPT</th>
@@ -556,19 +556,17 @@
                             <th style="text-align:right">SCHLÜSSELWÖRTER</th>
                         </tr>
                     </thead>
-                    <tbody id="concept-list-body"></tbody>
+                    <tbody></tbody>
                 </table>
             </div>
 
-            <!-- Datensätze Catalog View -->
             <div id="view-dataset-catalog" class="hidden">
                 <h1 class="page-title">Datenkatalog</h1>
-                
-                <div class="toolbar" id="toolbar-dataset">
+                <div class="toolbar">
                     <div class="search-group">
                         <div class="input-wrapper">
                             <span class="material-symbols-rounded search-icon">search</span>
-                            <input type="text" id="datasetSearchInput" placeholder="Suchen">
+                            <input type="text" id="search-dataset" placeholder="Suchen">
                         </div>
                         <button class="btn-filter">
                             <span class="material-symbols-rounded">filter_list</span>
@@ -576,18 +574,16 @@
                         </button>
                     </div>
                     <div class="view-toggles">
-                        <div id="btn-dataset-grid" class="toggle-icon active" data-view="grid">
+                        <div class="toggle-icon active" data-view="grid" data-type="dataset">
                             <span class="material-symbols-rounded">grid_view</span>
                         </div>
-                        <div id="btn-dataset-list" class="toggle-icon inactive" data-view="list">
+                        <div class="toggle-icon inactive" data-view="list" data-type="dataset">
                             <span class="material-symbols-rounded">view_list</span>
                         </div>
                     </div>
                 </div>
-
-                <div id="dataset-grid-container" class="grid"></div>
-
-                <table id="dataset-list-container" class="list-table hidden">
+                <div id="dataset-grid" class="grid"></div>
+                <table id="dataset-list" class="list-table hidden">
                     <thead>
                         <tr>
                             <th>DATENSATZ</th>
@@ -595,35 +591,30 @@
                             <th style="text-align:right">SCHLÜSSELWÖRTER</th>
                         </tr>
                     </thead>
-                    <tbody id="dataset-list-body"></tbody>
+                    <tbody></tbody>
                 </table>
             </div>
 
-            <!-- Konzept Detail View -->
+            <!-- Detail Views -->
             <div id="view-concept-detail" class="hidden">
-                <h1 class="page-title" id="concept-detail-title">Title</h1>
-                
+                <h1 class="page-title" id="detail-concept-title"></h1>
                 <div class="detail-hero">
                     <div class="detail-info">
-                        <div class="detail-tags" id="concept-detail-tags"></div>
-                        <p class="detail-desc" id="concept-detail-desc">Desc</p>
+                        <div class="detail-tags" id="detail-concept-tags"></div>
+                        <p class="detail-desc" id="detail-concept-desc"></p>
                     </div>
                     <div class="detail-image-box">
-                        <img id="concept-detail-img" src="" alt="">
+                        <img id="detail-concept-img" src="" alt="">
                     </div>
                 </div>
-
                 <div class="responsible-box">
                     <div class="box-title">Verantwortliche Person</div>
                     <div class="box-text">Niemand fühlt sich für diesen Datensatz zuständig – höchste Zeit, jemandem diese Ehre zu erteilen!</div>
                 </div>
-
                 <h3 class="section-title">Metadaten</h3>
-                <div class="meta-list" id="concept-meta-list"></div>
-
+                <div class="meta-list" id="detail-concept-meta"></div>
                 <h3 class="section-title">Standards</h3>
-                <div class="meta-list" id="concept-standards-list"></div>
-
+                <div class="meta-list" id="detail-concept-standards"></div>
                 <h3 class="section-title">Attribute</h3>
                 <table class="attr-table">
                     <thead>
@@ -635,50 +626,44 @@
                             <th>BESCHREIBUNG</th>
                         </tr>
                     </thead>
-                    <tbody id="concept-attr-body"></tbody>
+                    <tbody id="detail-concept-attrs"></tbody>
                 </table>
                 <div style="height:100px;"></div>
             </div>
 
-            <!-- Datensatz Detail View -->
             <div id="view-dataset-detail" class="hidden">
-                <h1 class="page-title" id="dataset-detail-title">Title</h1>
-                
+                <h1 class="page-title" id="detail-dataset-title"></h1>
                 <div class="detail-hero">
                     <div class="detail-info">
-                        <p class="detail-desc" id="dataset-detail-desc">Desc</p>
-                        <div class="detail-tags" id="dataset-detail-tags"></div>
+                        <p class="detail-desc" id="detail-dataset-desc"></p>
+                        <div class="detail-tags" id="detail-dataset-tags"></div>
                     </div>
                     <div class="detail-image-box">
-                        <img id="dataset-detail-img" src="" alt="">
+                        <img id="detail-dataset-img" src="" alt="">
                     </div>
                 </div>
-
                 <div class="responsible-box">
                     <div class="box-title">Verantwortliche Person</div>
                     <div class="box-text">Niemand fühlt sich für diesen Datensatz zuständig – höchste Zeit, jemandem diese Ehre zu erteilen!</div>
                 </div>
-
                 <h3 class="section-title">Metadaten</h3>
-                <div class="meta-list" id="dataset-meta-list"></div>
-
+                <div class="meta-list" id="detail-dataset-meta"></div>
                 <h3 class="section-title">Bereitstellungsformen</h3>
-                <div class="meta-list" id="dataset-distributions-list"></div>
-
+                <div class="distributions-list" id="detail-dataset-distributions"></div>
                 <h3 class="section-title">Publikationen in externen Katalogen</h3>
-                <div class="meta-list" id="dataset-publications-list"></div>
-
+                <div class="publications-list" id="detail-dataset-publications"></div>
                 <div style="height:100px;"></div>
             </div>
 
-            <!-- Über diesen Datenkatalog View -->
-            <div id="view-about" class="hidden">
+            <!-- Content Pages -->
+            <div id="view-about" class="hidden content-page">
                 <h1 class="page-title">Über diesen Datenkatalog</h1>
+                <div id="about-content"></div>
             </div>
 
-            <!-- Handbuch View -->
-            <div id="view-handbuch" class="hidden">
+            <div id="view-handbuch" class="hidden content-page">
                 <h1 class="page-title">Handbuch</h1>
+                <div id="handbuch-content"></div>
             </div>
         </main>
     </div>
@@ -702,527 +687,20 @@
     </footer>
 
     <script>
-        // === STATIC CONTENT ===
-        const ABOUT_CONTENT = `
-            <h2 class="page-title-h2">Was ist ein Datenkatalog?</h2> 
-            <p>Ein Metadatenkatalog ist die gemeinsame Sprache für die Daten einer Organisation. Im Immobilienmanagement des Bundes arbeiten verschiedene Abteilungen und Systeme oft mit unterschiedlichen Begriffen für dieselben Konzepte. Diese fehlende Standardisierung verhindert Interoperabilität und erschwert die Zusammenarbeit. Der Metadatenkatalog etabliert einheitliche Standards und Definitionen für alle Geschäftsobjekte und dokumentiert transparent deren Zusammenhänge, Verantwortlichkeiten und Nutzungsmöglichkeiten. Als zentrale Referenz schafft er die Grundlage für eine vernetzte Datenbewirtschaftung in der Bundesverwaltung.</p>
-            
-            <h3>Wieso ist das für uns relevant?</h3>
-            <p>Das BBL verwaltet das Immobilienportfolio des Bundes mit tausenden von Datenelementen aus verschiedensten Fachanwendungen. Die manuelle Dokumentation dieser komplexen Datenlandschaft ist nicht mehr beherrschbar. Gleichzeitig verlangen regulatorische Anforderungen (DSG, EMBAV, ISG, BGÖ) lückenlose Nachweise über unsere Datenverarbeitungen. Ohne systematische Metadatenverwaltung werden Compliance-Risiken unkalkulierbar und das Once-Only-Prinzip bleibt unerreichbar.</p>
-            
-            <h3>Was sind die Ziele dieses Metadatenkatalogs?</h3>
-            <ul>
-                <li><strong>Dreistufiges Metadatenmodell:</strong> Klare Trennung zwischen fachlichen Geschäftsobjekten, Datenmodellierung und technischer Implementierung nach TOGAF-Standard</li>
-                <li><strong>Business-freundliche Oberfläche:</strong> Verständliche Darstellung ohne technische Komplexität bei voller Integration mit Innovator EA im Hintergrund</li>
-                <li><strong>Automatisierte Prozesse:</strong> API-getriebene Verwaltung für Import, Export und Massenmutationen</li>
-                <li><strong>Compliance-Instrument:</strong> Automatisierte Nachweise für gesetzliche Anforderungen auf Knopfdruck</li>
-                <li><strong>Nationale Integration:</strong> Synchronisation mit i14y, opendata.swiss, simap.ch und TERMDAT</li>
-                <li><strong>Data Governance:</strong> Eindeutige Rollen und Verantwortlichkeiten für jeden Datensatz</li>
-            </ul>
-            
-            <h3>Wer profitiert von einem Metadatenkatalog?</h3>
-            <ul>
-                <li><strong>Fachbereiche:</strong> Verständliche Dokumentation ihrer Geschäftsobjekte und klare Ansprechpartner</li>
-                <li><strong>IT-Architekten:</strong> Effiziente Verwaltung von Datenmodellen und Standards</li>
-                <li><strong>IT-Teams:</strong> Präzise technische Spezifikationen für Systemintegrationen</li>
-                <li><strong>Compliance:</strong> Automatisierte Berichte für Audits und Datenschutzbeauftragte</li>
-                <li><strong>Führung:</strong> Transparente Entscheidungsgrundlagen basierend auf verlässlichen Metadaten</li>
-                <li><strong>Externe Partner:</strong> Standardisierter Zugang zu öffentlichen Immobilien- und Beschaffungsdaten</li>
-            </ul>
+    (function() {
+        // === STATE ===
+        const state = {
+            data: { concept: [], dataset: [] },
+            view: { concept: 'grid', dataset: 'grid' },
+            filter: { concept: '', dataset: '' },
+            contentLoaded: { about: false, handbuch: false }
+        };
 
-            <h3>Nächste Schritte</h3>
-            <p>Wir werden den Katalog weiter verfeinern, indem wir uns an die Dateneigentümer wenden, bestehende Einträge aktualisieren und die Integration mit anderen Plattformen prüfen. Mit der Zeit wollen wir dieses Tool zu einer unverzichtbaren Ressource für interne und externe Partner machen, die datengesteuerte Innovationen in allen Bereichen ermöglicht.</p>
-
-            <h3>Weitere Informationen</h3>
-            <div class="info-link">
-                <a href="https://confluence-link-to-fachkonzept" target="_blank" class="footer-link" style="color:var(--text-black);">
-                    <span class="material-symbols-rounded">open_in_new</span>
-                    Fachkonzept Metadatenmanagement IMMO (Confluence)
-                </a>
-            </div>
-        `;
-
-        const HANDBUCH_CONTENT = `
-            <h2 class="page-title-h2">Das Metadatenmodell</h2>
-            <p>Das Metadatenmodell des BBL-Immobilienkatalogs basiert auf dem Swiss DCAT Application Profile (DCAT-AP CH v3.0.0) und erweitert dieses minimal um spezifische Komponenten für die Verwaltung von Immobiliendaten des Bundes.</p>
-            
-            <h3>Kernarchitektur</h3>
-            <p>Das Modell besteht aus fünf DCAT-Hauptklassen und einer BBL-spezifischen Erweiterung:</p>
-            
-            <p><strong>DCAT-Standardklassen:</strong></p>
-            <ul>
-                <li><strong>dcat:Catalog</strong> - BBL-Immobilienkatalog als Gesamtverzeichnis</li>
-                <li><strong>dcat:Dataset</strong> - Immobiliendatensammlungen (Gebäudestammdaten, Energiedaten)</li>
-                <li><strong>dcat:DatasetSeries</strong> - Zeitreihen (Jahresberichte, Kostenentwicklungen)</li>
-                <li><strong>dcat:Distribution</strong> - Bereitstellungsformen (Excel, API, PDF)</li>
-                <li><strong>dcat:DataService</strong> - Datendienste (SAP-Schnittstellen, REST-APIs)</li>
-            </ul>
-            
-            <p><strong>Schema-Modellierung (DCAT-konform):</strong></p>
-            <ul>
-                <li><strong>dct:Standard</strong> - Geschäftsobjekt-Schema (Gebäude, Grundstück, Mietvertrag)</li>
-                <li><strong>skos:ConceptScheme</strong> - Kontrollierte Vokabulare und Wertelisten (Gebäudetypen, Kantone)</li>
-                <li><strong>skos:Concept</strong> - Einzelne Werte in Wertelisten</li>
-            </ul>
-            
-            <p><strong>BBL-spezifische Erweiterung:</strong></p>
-            <ul>
-                <li><strong>bv:Attribute</strong> - Datenfelder mit Typdefinitionen, Validierungsregeln und Wertelisten-Referenzen</li>
-            </ul>
-
-            <img src="BBL DCAT-AP CH.avif" alt="Diagramm des BBL DCAT-AP CH Metadatenmodells" class="handbuch-img">
-            
-            <h3>Geschäftsobjekt-Modellierung</h3>
-            <pre style="background:#f2f2f2; padding:15px; border:1px solid #ddd; font-size:14px; overflow-x:auto; color:#444;">
-dct:Standard "Gebäude-Schema"
-├── dct:identifier: "STD-001"
-├── dct:title: "Gebäude"@de, "Bâtiment"@fr, "Edificio"@it
-├── dct:description: Definition gemäss KBOB/TERMDAT
-├── bv:hasAttribute:
-│   ├── bv:Attribute "Baujahr"
-│   │   ├── dct:type: "xsd:gYear"
-│   │   ├── dct:required: true
-│   │   └── dct:conformsTo → skos:ConceptScheme "Jahre"
-│   └── bv:Attribute "Gebäudetyp"
-│       └── dct:conformsTo → skos:ConceptScheme "Gebäudetypen"
-└── dcat:version: "3.0.0"
-            </pre>
-
-            <h3>Versionierung</h3>
-            <p>Alle Elemente unterstützen vollständige Versionskontrolle:</p>
-            <ul>
-                <li><strong>dcat:version</strong> - Semantische Versionierung (MAJOR.MINOR.PATCH)</li>
-                <li><strong>dct:issued</strong> - Erstveröffentlichung</li>
-                <li><strong>dct:modified</strong> - Letzte Änderung</li>
-                <li><strong>adms:versionNotes</strong> - Änderungsbeschreibung</li>
-                <li><strong>dcat:previousVersion</strong> - Verweis auf Vorgängerversion</li>
-            </ul>
-
-            <h3>Governance und Zugriffssteuerung</h3>
-            <p><strong>Rollenmodell:</strong></p>
-            <ul>
-                <li><strong>bv:dataOwner</strong> (foaf:Agent) - Fachverantwortlicher Immobilienmanagement</li>
-                <li><strong>bv:dataSteward</strong> (foaf:Agent) - Datenarchitekt/Datenmanager</li>
-                <li><strong>bv:dataCustodian</strong> (foaf:Agent) - Technischer Systembetreuer</li>
-            </ul>
-            
-            <p><strong>Zugriffsrechte und Compliance:</strong></p>
-            <ul>
-                <li><strong>dct:accessRights</strong> - Zugriffsbeschränkungen (öffentlich/intern/vertraulich)</li>
-                <li><strong>dct:license</strong> - Nutzungsbedingungen</li>
-                <li><strong>bv:dsgCategory</strong> - DSG-Klassifizierung</li>
-                <li><strong>bv:isgClassification</strong> - Informationssicherheitsstufe</li>
-                <li><strong>dcatap:applicableLegislation</strong> - Rechtliche Grundlagen (EMBAG, DSG)</li>
-            </ul>
-
-            <h3>Strukturbeispiel</h3>
-            <pre style="background:#f2f2f2; padding:15px; border:1px solid #ddd; font-size:14px; overflow-x:auto; color:#444;">
-BBL Immobilienkatalog (dcat:Catalog)
-├── Geschäftsobjekt-Schemas (Konzeptuelle Ebene)
-│   ├── dct:Standard "Gebäude-Schema" v3.0.0
-│   └── dct:Standard "Grundstück-Schema" v2.1.0
-│
-├── Datenattribute (Logische Ebene)
-│   ├── bv:Attribute "EGID" (required, unique)
-│   └── bv:Attribute "Nutzfläche" (decimal, m²)
-│
-├── Wertelisten (Referenzdaten)
-│   ├── skos:ConceptScheme "Gebäudetypen" v2.1.0
-│   └── skos:ConceptScheme "Kantone" v1.0.0
-│
-└── Datasets (Physische Ebene)
-    ├── dcat:Dataset "Gebäudestammdaten 2025"
-    │   └── dcat:Distribution (SAP-Export, REST-API)
-    └── dcat:DataService "IMMO-API v2"
-            </pre>
-            <p>Diese Struktur ermöglicht die vollständige Nachvollziehbarkeit der Datenherkunft, klare Verantwortlichkeiten und erfüllt alle regulatorischen Anforderungen der Bundesverwaltung.</p>
-
-            <h3>Weiterführende Informationen und Standards</h3>
-            <p><strong>Verwendete Standards und Spezifikationen:</strong></p>
-            <ul>
-                <li><strong>DCAT v3 (W3C Recommendation)</strong><br>Die Basis unseres Metadatenmodells. Besonders relevant sind die Qualified Forms für erweiterte Beziehungen:<br><a href="https://www.w3.org/TR/vocab-dcat-3/#qualified-forms" target="_blank">https://www.w3.org/TR/vocab-dcat-3/#qualified-forms</a></li>
-                
-                <li><strong>Dublin Core Metadata Terms</strong><br>Definiert zentrale Properties wie dct:Standard, dct:conformsTo und dct:identifier:<br><a href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#Standard" target="_blank">https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#Standard</a></li>
-                
-                <li><strong>DCAT-AP CH (eCH-0200)</strong><br>Der Schweizer Anwendungsstandard für Datenportale der Bundesverwaltung:<br><a href="https://ech.ch/de/ech/ech-0200/3.0" target="_blank">https://ech.ch/de/ech/ech-0200/3.0</a><br><a href="https://www.dcat-ap.ch/" target="_blank">https://www.dcat-ap.ch/</a></li>
-                
-                <li><strong>SKOS (Simple Knowledge Organization System)</strong><br>Für die Modellierung von Wertelisten und kontrollierten Vokabularen:<br><a href="https://www.w3.org/TR/skos-reference/" target="_blank">https://www.w3.org/TR/skos-reference/</a></li>
-            </ul>
-
-            <p><strong>Governance-Rollen gemäss NaDB</strong></p>
-            <p>Die Rollendefinitionen basieren auf der Nationalen Datenbewirtschaftung des BFS:</p>
-            <ul>
-                <li><strong>Data Owner</strong> - Fachliche Verantwortung</li>
-                <li><strong>Data Steward</strong> - Datenarchitektur und -qualität</li>
-                <li><strong>Data Custodian</strong> - Technischer Betrieb</li>
-            </ul>
-        `;
-
-
-        // === APPLICATION LOGIC ===
-        (function() {
-            // State
-            let conceptDb = [];
-            let datasetDb = [];
-            let currentConceptView = 'grid';
-            let currentDatasetView = 'grid';
-            let currentConceptFilter = '';
-            let currentDatasetFilter = '';
-            let currentPage = 'concept';
-
-            // ===== INITIALIZATION =====
-            async function init() {
-                try {
-                    // Load concepts data
-                    const conceptRes = await fetch('data/concepts.json');
-                    conceptDb = await conceptRes.json();
-                    
-                    // Load datasets data
-                    try {
-                        const datasetRes = await fetch('data/datasets.json');
-                        datasetDb = await datasetRes.json();
-                    } catch (e) {
-                        console.warn("data/datasets.json not found, using empty array");
-                        datasetDb = [];
-                    }
-                    
-                    // Pre-render static content
-                    document.getElementById('view-about').innerHTML = '<h1 class="page-title">Über diesen Datenkatalog</h1>' + ABOUT_CONTENT;
-                    document.getElementById('view-handbuch').innerHTML = '<h1 class="page-title">Handbuch</h1>' + HANDBUCH_CONTENT;
-
-                    // Setup event listeners
-                    setupEventListeners();
-                    
-                    // Handle initial route
-                    window.addEventListener('hashchange', handleRoute);
-                    handleRoute();
-
-                } catch (e) {
-                    console.error("Data load failed:", e);
-                }
-            }
-
-            function setupEventListeners() {
-                // Navigation Tabs
-                document.querySelectorAll('.nav-tabs .nav-link').forEach(tab => {
-                    tab.addEventListener('click', (e) => {
-                        const page = e.currentTarget.dataset.page;
-                        window.location.hash = `#/${page}`;
-                    });
-                });
-
-                // Concept View Toggles
-                document.getElementById('btn-concept-grid')?.addEventListener('click', () => switchConceptView('grid'));
-                document.getElementById('btn-concept-list')?.addEventListener('click', () => switchConceptView('list'));
-
-                // Dataset View Toggles
-                document.getElementById('btn-dataset-grid')?.addEventListener('click', () => switchDatasetView('grid'));
-                document.getElementById('btn-dataset-list')?.addEventListener('click', () => switchDatasetView('list'));
-
-                // Concept Search
-                document.getElementById('conceptSearchInput')?.addEventListener('input', (e) => {
-                    currentConceptFilter = e.target.value.toLowerCase();
-                    renderCurrentConceptView();
-                });
-
-                // Dataset Search
-                document.getElementById('datasetSearchInput')?.addEventListener('input', (e) => {
-                    currentDatasetFilter = e.target.value.toLowerCase();
-                    renderCurrentDatasetView();
-                });
-            }
-
-            // ===== ROUTING =====
-            function handleRoute() {
-                const hash = window.location.hash;
-                
-                if (hash.startsWith('#/concept/')) {
-                    const id = hash.split('/')[2];
-                    renderConceptDetail(id);
-                } else if (hash.startsWith('#/dataset/')) {
-                    const id = hash.split('/')[2];
-                    renderDatasetDetail(id);
-                } else if (hash === '#/dataset' || hash.startsWith('#/dataset')) {
-                    navigate('dataset');
-                } else if (hash === '#/about' || hash.startsWith('#/about')) {
-                    navigate('about');
-                } else if (hash === '#/handbuch' || hash.startsWith('#/handbuch')) {
-                    navigate('handbuch');
-                } else {
-                    navigate('concept');
-                }
-            }
-
-            function setBreadcrumbs(page, title) {
-                const breadcrumbsEl = document.getElementById('breadcrumbs');
-                if (!breadcrumbsEl) return;
-
-                let html = `<a href="#/concept">Startseite</a> <span>&gt;</span> `;
-                
-                switch(page) {
-                    case 'concept':
-                        html += `Konzepte`;
-                        break;
-                    case 'dataset':
-                        html += `Datenkatalog`;
-                        break;
-                    case 'about':
-                        html += `Über diesen Datenkatalog`;
-                        break;
-                    case 'handbuch':
-                        html += `Handbuch`;
-                        break;
-                    case 'concept-detail':
-                        html += `<a href="#/concept">Konzepte</a> <span>&gt;</span> ${title}`;
-                        break;
-                    case 'dataset-detail':
-                        html += `<a href="#/dataset">Datenkatalog</a> <span>&gt;</span> ${title}`;
-                        break;
-                }
-
-                breadcrumbsEl.innerHTML = html;
-            }
-
-            function navigate(page) {
-                currentPage = page;
-
-                // Update tab highlighting
-                document.querySelectorAll('.nav-link').forEach(tab => tab.classList.remove('active'));
-                
-                if (page === 'concept' || page === 'concept-detail') {
-                    document.getElementById('tab-concept')?.classList.add('active');
-                } else if (page === 'dataset' || page === 'dataset-detail') {
-                    document.getElementById('tab-dataset')?.classList.add('active');
-                } else {
-                    document.getElementById(`tab-${page}`)?.classList.add('active');
-                }
-
-                // Hide all views
-                const views = ['view-concept-catalog', 'view-dataset-catalog', 'view-concept-detail', 'view-dataset-detail', 'view-about', 'view-handbuch'];
-                views.forEach(id => document.getElementById(id)?.classList.add('hidden'));
-
-                const actionIcons = document.querySelector('.action-icons');
-
-                switch(page) {
-                    case 'concept':
-                        document.getElementById('view-concept-catalog')?.classList.remove('hidden');
-                        if (actionIcons) actionIcons.style.display = 'flex';
-                        setBreadcrumbs('concept');
-                        renderCurrentConceptView();
-                        break;
-                    case 'dataset':
-                        document.getElementById('view-dataset-catalog')?.classList.remove('hidden');
-                        if (actionIcons) actionIcons.style.display = 'flex';
-                        setBreadcrumbs('dataset');
-                        renderCurrentDatasetView();
-                        break;
-                    case 'about':
-                        document.getElementById('view-about')?.classList.remove('hidden');
-                        if (actionIcons) actionIcons.style.display = 'flex';
-                        setBreadcrumbs('about');
-                        break;
-                    case 'handbuch':
-                        document.getElementById('view-handbuch')?.classList.remove('hidden');
-                        if (actionIcons) actionIcons.style.display = 'flex';
-                        setBreadcrumbs('handbuch');
-                        break;
-                }
-            }
-
-            // ===== VIEW SWITCHING =====
-            function switchConceptView(view) {
-                currentConceptView = view;
-                
-                const gridBtn = document.getElementById('btn-concept-grid');
-                const listBtn = document.getElementById('btn-concept-list');
-
-                if (view === 'grid') {
-                    gridBtn.className = 'toggle-icon active';
-                    listBtn.className = 'toggle-icon inactive';
-                    document.getElementById('concept-grid-container')?.classList.remove('hidden');
-                    document.getElementById('concept-list-container')?.classList.add('hidden');
-                } else {
-                    gridBtn.className = 'toggle-icon inactive';
-                    listBtn.className = 'toggle-icon active';
-                    document.getElementById('concept-grid-container')?.classList.add('hidden');
-                    document.getElementById('concept-list-container')?.classList.remove('hidden');
-                }
-                renderCurrentConceptView();
-            }
-
-            function switchDatasetView(view) {
-                currentDatasetView = view;
-                
-                const gridBtn = document.getElementById('btn-dataset-grid');
-                const listBtn = document.getElementById('btn-dataset-list');
-
-                if (view === 'grid') {
-                    gridBtn.className = 'toggle-icon active';
-                    listBtn.className = 'toggle-icon inactive';
-                    document.getElementById('dataset-grid-container')?.classList.remove('hidden');
-                    document.getElementById('dataset-list-container')?.classList.add('hidden');
-                } else {
-                    gridBtn.className = 'toggle-icon inactive';
-                    listBtn.className = 'toggle-icon active';
-                    document.getElementById('dataset-grid-container')?.classList.add('hidden');
-                    document.getElementById('dataset-list-container')?.classList.remove('hidden');
-                }
-                renderCurrentDatasetView();
-            }
-
-            // ===== FILTERING =====
-            function filterItems(items, filter) {
-                if (!filter) return items;
-                return items.filter(i => 
-                    i.title.toLowerCase().includes(filter) ||
-                    i.description.toLowerCase().includes(filter) ||
-                    (i.topTags || []).some(t => t.toLowerCase().includes(filter)) ||
-                    (i.bottomTags || []).some(t => t.toLowerCase().includes(filter))
-                );
-            }
-
-            function renderCurrentConceptView() {
-                const filtered = filterItems(conceptDb, currentConceptFilter);
-                if (currentConceptView === 'grid') {
-                    renderConceptGrid(filtered);
-                } else {
-                    renderConceptList(filtered);
-                }
-            }
-
-            function renderCurrentDatasetView() {
-                const filtered = filterItems(datasetDb, currentDatasetFilter);
-                if (currentDatasetView === 'grid') {
-                    renderDatasetGrid(filtered);
-                } else {
-                    renderDatasetList(filtered);
-                }
-            }
-
-            // ===== GRID RENDERING =====
-            function renderConceptGrid(items) {
-                const container = document.getElementById('concept-grid-container');
-                if (!container) return;
-
-                container.innerHTML = items.map(item => createCardHTML(item, 'concept')).join('');
-
-                container.querySelectorAll('.card').forEach(card => {
-                    card.addEventListener('click', () => {
-                        window.location.hash = `#/concept/${card.dataset.id}`;
-                    });
-                });
-            }
-
-            function renderDatasetGrid(items) {
-                const container = document.getElementById('dataset-grid-container');
-                if (!container) return;
-
-                container.innerHTML = items.map(item => createCardHTML(item, 'dataset')).join('');
-
-                container.querySelectorAll('.card').forEach(card => {
-                    card.addEventListener('click', () => {
-                        window.location.hash = `#/dataset/${card.dataset.id}`;
-                    });
-                });
-            }
-
-            function createCardHTML(item, type) {
-                return `
-                    <div class="card" data-id="${item.id}">
-                        <div class="card-img-wrap">
-                            <img src="${item.image}" class="card-img" alt="${item.title}">
-                            <div class="tags-overlay">
-                                ${(item.topTags || []).map(t => `<span class="tag-pill">${t}</span>`).join('')}
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <h3 class="card-title">${item.title}</h3>
-                            <p class="card-desc">${item.description}</p>
-                            <div class="card-footer">
-                                <div class="tags-bottom">
-                                    ${(item.bottomTags || []).slice(0, 3).map(t => `<span class="tag-pill">${t}</span>`).join('')}
-                                </div>
-                                <div class="btn-arrow">
-                                    <span class="material-symbols-rounded">arrow_forward</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }
-
-            // ===== LIST RENDERING =====
-            function renderConceptList(items) {
-                const tbody = document.getElementById('concept-list-body');
-                if (!tbody) return;
-
-                tbody.innerHTML = items.map(item => createListRowHTML(item)).join('');
-
-                tbody.querySelectorAll('tr').forEach(row => {
-                    row.addEventListener('click', () => {
-                        window.location.hash = `#/concept/${row.dataset.id}`;
-                    });
-                });
-            }
-
-            function renderDatasetList(items) {
-                const tbody = document.getElementById('dataset-list-body');
-                if (!tbody) return;
-
-                tbody.innerHTML = items.map(item => createListRowHTML(item)).join('');
-
-                tbody.querySelectorAll('tr').forEach(row => {
-                    row.addEventListener('click', () => {
-                        window.location.hash = `#/dataset/${row.dataset.id}`;
-                    });
-                });
-            }
-
-            function createListRowHTML(item) {
-                const allTags = [...(item.topTags || []), ...(item.bottomTags || [])];
-                return `
-                    <tr data-id="${item.id}">
-                        <td class="col-title">${item.title}</td>
-                        <td class="col-desc">${item.description}</td>
-                        <td class="col-tags">
-                            ${allTags.map(t => `<span class="tag-pill" style="margin-left:5px; margin-bottom:5px;">${t}</span>`).join('')}
-                        </td>
-                    </tr>
-                `;
-            }
-
-            // ===== CONCEPT DETAIL =====
-            function renderConceptDetail(id) {
-                const item = conceptDb.find(x => x.id === id);
-                if (!item) return navigate('concept');
-
-                // Hide all views, show concept detail
-                const views = ['view-concept-catalog', 'view-dataset-catalog', 'view-concept-detail', 'view-dataset-detail', 'view-about', 'view-handbuch'];
-                views.forEach(vid => document.getElementById(vid)?.classList.add('hidden'));
-                document.getElementById('view-concept-detail')?.classList.remove('hidden');
-
-                // Update tab highlighting
-                document.querySelectorAll('.nav-link').forEach(tab => tab.classList.remove('active'));
-                document.getElementById('tab-concept')?.classList.add('active');
-
-                document.querySelector('.action-icons').style.display = 'flex';
-                setBreadcrumbs('concept-detail', item.title);
-
-                // Populate content
-                document.getElementById('concept-detail-title').textContent = item.title;
-                document.getElementById('concept-detail-desc').textContent = item.fullDescription || item.description;
-                document.getElementById('concept-detail-img').src = item.image || '';
-
-                // Tags
-                const tagsContainer = document.getElementById('concept-detail-tags');
-                if (tagsContainer) {
-                    tagsContainer.innerHTML = [...(item.topTags || []), ...(item.bottomTags || [])]
-                        .map(t => `<span class="tag-pill">${t}</span>`).join('');
-                }
-
-                // Metadata
-                const metaContainer = document.getElementById('concept-meta-list');
-                const metaFields = [
+        // === CONFIG ===
+        const config = {
+            views: ['view-concept-catalog', 'view-dataset-catalog', 'view-concept-detail', 'view-dataset-detail', 'view-about', 'view-handbuch'],
+            metaFields: {
+                concept: [
                     { key: 'fachliche_id', label: 'Fachliche ID', type: 'pill' },
                     { key: 'guid', label: 'GUID', type: 'text' },
                     { key: 'termdat', label: 'TERMDAT', type: 'link' },
@@ -1232,102 +710,8 @@ BBL Immobilienkatalog (dcat:Catalog)
                     { key: 'personenbezogen', label: 'Personenbezogene Daten', type: 'pill' },
                     { key: 'kommentar', label: 'Kommentar', type: 'text' },
                     { key: 'version', label: 'Version', type: 'text' }
-                ];
-
-                if (metaContainer) {
-                    if (item.meta) {
-                        metaContainer.innerHTML = metaFields.map(field => {
-                            const val = item.meta[field.key] || '-';
-                            let displayVal = val;
-
-                            if (field.type === 'pill' && val !== '-') {
-                                displayVal = `<span class="tag-pill">${val}</span>`;
-                            } else if (field.type === 'link' && typeof val === 'string' && val.startsWith('http')) {
-                                displayVal = `<a href="${val}" target="_blank">${val}</a>`;
-                            }
-
-                            return `
-                                <div class="meta-row">
-                                    <div class="meta-key">${field.label}</div>
-                                    <div class="meta-val">${displayVal}</div>
-                                </div>
-                            `;
-                        }).join('');
-                    } else {
-                        metaContainer.innerHTML = '<div class="meta-row">Keine Metadaten</div>';
-                    }
-                }
-
-                // Standards
-                const stdContainer = document.getElementById('concept-standards-list');
-                if (stdContainer) {
-                    if (item.standards && item.standards.length > 0) {
-                        stdContainer.innerHTML = item.standards.map(s => `
-                            <div class="meta-row">
-                                <div class="meta-key">${s.name}</div>
-                                <div class="meta-val">${s.value}</div>
-                            </div>
-                        `).join('');
-                    } else {
-                        stdContainer.innerHTML = '<div class="meta-row">Keine Standards definiert</div>';
-                    }
-                }
-
-                // Attributes
-                const attrBody = document.getElementById('concept-attr-body');
-                if (attrBody) {
-                    if (item.attributes && item.attributes.length > 0) {
-                        attrBody.innerHTML = item.attributes.map(a => {
-                            const keyBadge = a.key === '-' ? '-' : `<span class="tag-pill">${a.key}</span>`;
-                            const listBadge = a.list === '-' ? '-' : `<span class="tag-pill">${a.list}</span>`;
-                            return `
-                                <tr>
-                                    <td>${a.name}</td>
-                                    <td><span class="tag-pill">${a.format}</span></td>
-                                    <td>${keyBadge}</td>
-                                    <td>${listBadge}</td>
-                                    <td>${a.desc}</td>
-                                </tr>
-                            `;
-                        }).join('');
-                    } else {
-                        attrBody.innerHTML = '<tr><td colspan="5">Keine Attribute definiert</td></tr>';
-                    }
-                }
-            }
-
-            // ===== DATASET DETAIL =====
-            function renderDatasetDetail(id) {
-                const item = datasetDb.find(x => x.id === id);
-                if (!item) return navigate('dataset');
-
-                // Hide all views, show dataset detail
-                const views = ['view-concept-catalog', 'view-dataset-catalog', 'view-concept-detail', 'view-dataset-detail', 'view-about', 'view-handbuch'];
-                views.forEach(vid => document.getElementById(vid)?.classList.add('hidden'));
-                document.getElementById('view-dataset-detail')?.classList.remove('hidden');
-
-                // Update tab highlighting
-                document.querySelectorAll('.nav-link').forEach(tab => tab.classList.remove('active'));
-                document.getElementById('tab-dataset')?.classList.add('active');
-
-                document.querySelector('.action-icons').style.display = 'flex';
-                setBreadcrumbs('dataset-detail', item.title);
-
-                // Populate content
-                document.getElementById('dataset-detail-title').textContent = item.title;
-                document.getElementById('dataset-detail-desc').textContent = item.fullDescription || item.description;
-                document.getElementById('dataset-detail-img').src = item.image || '';
-
-                // Tags (below description for datasets)
-                const tagsContainer = document.getElementById('dataset-detail-tags');
-                if (tagsContainer) {
-                    tagsContainer.innerHTML = [...(item.topTags || []), ...(item.bottomTags || [])]
-                        .map(t => `<span class="tag-pill">${t}</span>`).join('');
-                }
-
-                // Metadata
-                const metaContainer = document.getElementById('dataset-meta-list');
-                const metaFields = [
+                ],
+                dataset: [
                     { key: 'kontaktstelle', label: 'Kontaktstelle', type: 'text' },
                     { key: 'ausgabedatum', label: 'Ausgabedatum', type: 'text' },
                     { key: 'aktualisierungsintervall', label: 'Aktualisierungsintervall', type: 'pill' },
@@ -1339,119 +723,345 @@ BBL Immobilienkatalog (dcat:Catalog)
                     { key: 'thema', label: 'Thema', type: 'pill' },
                     { key: 'rechtsgrundlage', label: 'Rechtsgrundlage', type: 'text' },
                     { key: 'kommentar', label: 'Kommentar', type: 'text' }
-                ];
+                ]
+            },
+            distributionFields: [
+                { key: 'identifikator', label: 'Identifikator' },
+                { key: 'titel', label: 'Titel', fallback: 'name' },
+                { key: 'zugriffsUrl', label: 'Zugriffs-URL', isLink: true },
+                { key: 'downloadUrl', label: 'Download-URL', isLink: true },
+                { key: 'status', label: 'Status' },
+                { key: 'dateiformat', label: 'Dateiformat', fallback: 'format' },
+                { key: 'lizenz', label: 'Lizenz' },
+                { key: 'bemerkungen', label: 'Zusätzliche Bemerkungen' }
+            ]
+        };
 
-                if (metaContainer) {
-                    if (item.meta) {
-                        metaContainer.innerHTML = metaFields.map(field => {
-                            const val = item.meta[field.key];
-                            let displayVal = '-';
+        // === UTILITIES ===
+        const $ = (sel, ctx = document) => ctx.querySelector(sel);
+        const $$ = (sel, ctx = document) => ctx.querySelectorAll(sel);
 
-                            if (val) {
-                                if (field.type === 'pill') {
-                                    displayVal = `<span class="tag-pill">${val}</span>`;
-                                } else if (field.type === 'pills' && Array.isArray(val)) {
-                                    displayVal = val.map(v => `<span class="tag-pill">${v}</span>`).join('');
-                                } else {
-                                    displayVal = val;
-                                }
-                            }
+        function formatValue(val, type) {
+            if (!val || val === '-') return '-';
+            if (type === 'pill') return `<span class="tag-pill">${val}</span>`;
+            if (type === 'pills' && Array.isArray(val)) return val.map(v => `<span class="tag-pill">${v}</span>`).join('');
+            if (type === 'link' && val.startsWith('http')) return `<a href="${val}" target="_blank">${val}</a>`;
+            return val;
+        }
 
-                            return `
-                                <div class="meta-row">
-                                    <div class="meta-key">${field.label}</div>
-                                    <div class="meta-val">${displayVal}</div>
-                                </div>
-                            `;
-                        }).join('');
-                    } else {
-                        metaContainer.innerHTML = '<div class="meta-row">Keine Metadaten</div>';
-                    }
+        function createDataRow(label, value, type = 'text') {
+            return `<div class="data-row"><div class="data-row-key">${label}</div><div class="data-row-val">${formatValue(value, type)}</div></div>`;
+        }
+
+        function createTags(tags) {
+            return tags.map(t => `<span class="tag-pill">${t}</span>`).join('');
+        }
+
+        function filterItems(items, filter) {
+            if (!filter) return items;
+            const f = filter.toLowerCase();
+            return items.filter(i => 
+                i.title.toLowerCase().includes(f) ||
+                i.description.toLowerCase().includes(f) ||
+                [...(i.topTags || []), ...(i.bottomTags || [])].some(t => t.toLowerCase().includes(f))
+            );
+        }
+
+        // === DATA LOADING ===
+        async function loadData() {
+            try {
+                const [conceptRes, datasetRes] = await Promise.all([
+                    fetch('data/concepts.json'),
+                    fetch('data/datasets.json').catch(() => ({ ok: false }))
+                ]);
+                
+                state.data.concept = await conceptRes.json();
+                state.data.dataset = datasetRes.ok ? await datasetRes.json() : [];
+            } catch (e) {
+                console.error('Data load failed:', e);
+            }
+        }
+
+        async function loadContent(type) {
+            if (state.contentLoaded[type]) return;
+            try {
+                const res = await fetch(`content/${type}.html`);
+                if (res.ok) {
+                    $(`#${type}-content`).innerHTML = await res.text();
+                    state.contentLoaded[type] = true;
                 }
+            } catch (e) {
+                console.error(`Failed to load ${type}.html:`, e);
+            }
+        }
 
-                // Distributions (Accordion)
-                const distContainer = document.getElementById('dataset-distributions-list');
-                if (distContainer) {
-                    if (item.distributions && item.distributions.length > 0) {
-                        distContainer.innerHTML = item.distributions.map((d, index) => {
-                            const icon = ['Excel', 'XLSX', 'XLS', 'CSV'].includes(d.format) ? 'description' : 'code';
-                            
-                            // Build detail rows - support both old simple format and new extended format
-                            const detailFields = [
-                                { key: 'Identifikator', val: d.identifikator },
-                                { key: 'Titel', val: d.titel || d.name },
-                                { key: 'Zugriffs-URL', val: d.zugriffsUrl, isLink: true },
-                                { key: 'Download-URL', val: d.downloadUrl, isLink: true },
-                                { key: 'Status', val: d.status },
-                                { key: 'Dateiformat', val: d.dateiformat || d.format },
-                                { key: 'Lizenz', val: d.lizenz },
-                                { key: 'Zusätzliche Bemerkungen', val: d.bemerkungen }
-                            ];
+        // === RENDERING ===
+        function renderCatalog(type) {
+            const items = filterItems(state.data[type], state.filter[type]);
+            const isGrid = state.view[type] === 'grid';
+            
+            const gridEl = $(`#${type}-grid`);
+            const listEl = $(`#${type}-list`);
+            
+            gridEl.classList.toggle('hidden', !isGrid);
+            listEl.classList.toggle('hidden', isGrid);
 
-                            const detailRowsHtml = detailFields.map(f => {
-                                let valHtml = f.val || '-';
-                                if (f.isLink && f.val) {
-                                    valHtml = `<a href="${f.val}" target="_blank">${f.val}</a>`;
-                                }
-                                return `
-                                    <div class="distribution-detail-row">
-                                        <div class="distribution-detail-key">${f.key}</div>
-                                        <div class="distribution-detail-val">${valHtml}</div>
-                                    </div>
-                                `;
-                            }).join('');
-
-                            return `
-                                <div class="distribution-item" data-index="${index}">
-                                    <div class="distribution-header">
-                                        <div class="distribution-left">${d.name}</div>
-                                        <div class="distribution-right">
-                                            <span class="material-symbols-rounded">${icon}</span>
-                                            <span class="distribution-format">${d.format}</span>
-                                            <span class="material-symbols-rounded expand-icon">expand_more</span>
-                                        </div>
-                                    </div>
-                                    <div class="distribution-details">
-                                        ${detailRowsHtml}
-                                    </div>
-                                </div>
-                            `;
-                        }).join('');
-
-                        // Add click handlers for accordion
-                        distContainer.querySelectorAll('.distribution-header').forEach(header => {
-                            header.addEventListener('click', () => {
-                                const item = header.closest('.distribution-item');
-                                item.classList.toggle('expanded');
-                            });
-                        });
-                    } else {
-                        distContainer.innerHTML = '<div class="meta-row">Keine Bereitstellungsformen definiert</div>';
-                    }
-                }
-
-                // Publications
-                const pubContainer = document.getElementById('dataset-publications-list');
-                if (pubContainer) {
-                    if (item.publications && item.publications.length > 0) {
-                        pubContainer.innerHTML = item.publications.map(p => `
-                            <div class="publication-row">
-                                <div class="publication-key">${p.catalog}</div>
-                                <div class="publication-val">${p.value}</div>
+            if (isGrid) {
+                gridEl.innerHTML = items.map(item => `
+                    <div class="card" data-id="${item.id}">
+                        <div class="card-img-wrap">
+                            <img src="${item.image}" class="card-img" alt="${item.title}">
+                            <div class="tags-overlay">${createTags(item.topTags || [])}</div>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">${item.title}</h3>
+                            <p class="card-desc">${item.description}</p>
+                            <div class="card-footer">
+                                <div class="tags-bottom">${createTags((item.bottomTags || []).slice(0, 3))}</div>
+                                <div class="btn-arrow"><span class="material-symbols-rounded">arrow_forward</span></div>
                             </div>
-                        `).join('');
-                    } else {
-                        pubContainer.innerHTML = '<div class="meta-row">Keine externen Publikationen</div>';
-                    }
-                }
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                $('tbody', listEl).innerHTML = items.map(item => {
+                    const allTags = [...(item.topTags || []), ...(item.bottomTags || [])];
+                    return `
+                        <tr data-id="${item.id}">
+                            <td class="col-title">${item.title}</td>
+                            <td class="col-desc">${item.description}</td>
+                            <td class="col-tags">${allTags.map(t => `<span class="tag-pill" style="margin-left:5px;margin-bottom:5px;">${t}</span>`).join('')}</td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+        }
+
+        function renderDetail(type, id) {
+            const item = state.data[type].find(x => x.id === id);
+            if (!item) return navigate(type);
+
+            showView(`view-${type}-detail`);
+            setActiveTab(type);
+            setBreadcrumbs(`${type}-detail`, item.title);
+
+            // Common fields
+            $(`#detail-${type}-title`).textContent = item.title;
+            $(`#detail-${type}-desc`).textContent = item.fullDescription || item.description;
+            $(`#detail-${type}-img`).src = item.image || '';
+            $(`#detail-${type}-tags`).innerHTML = createTags([...(item.topTags || []), ...(item.bottomTags || [])]);
+
+            // Metadata
+            const metaHtml = item.meta 
+                ? config.metaFields[type].map(f => createDataRow(f.label, item.meta[f.key], f.type)).join('')
+                : '<div class="data-row">Keine Metadaten</div>';
+            $(`#detail-${type}-meta`).innerHTML = metaHtml;
+
+            // Type-specific rendering
+            if (type === 'concept') {
+                renderConceptSpecific(item);
+            } else {
+                renderDatasetSpecific(item);
+            }
+        }
+
+        function renderConceptSpecific(item) {
+            // Standards
+            const stdHtml = item.standards?.length
+                ? item.standards.map(s => createDataRow(s.name, s.value)).join('')
+                : '<div class="data-row">Keine Standards definiert</div>';
+            $('#detail-concept-standards').innerHTML = stdHtml;
+
+            // Attributes
+            const attrHtml = item.attributes?.length
+                ? item.attributes.map(a => `
+                    <tr>
+                        <td>${a.name}</td>
+                        <td><span class="tag-pill">${a.format}</span></td>
+                        <td>${a.key === '-' ? '-' : `<span class="tag-pill">${a.key}</span>`}</td>
+                        <td>${a.list === '-' ? '-' : `<span class="tag-pill">${a.list}</span>`}</td>
+                        <td>${a.desc}</td>
+                    </tr>
+                `).join('')
+                : '<tr><td colspan="5">Keine Attribute definiert</td></tr>';
+            $('#detail-concept-attrs').innerHTML = attrHtml;
+        }
+
+        function renderDatasetSpecific(item) {
+            // Distributions
+            const distContainer = $('#detail-dataset-distributions');
+            if (item.distributions?.length) {
+                distContainer.innerHTML = item.distributions.map((d, i) => {
+                    const icon = ['Excel', 'XLSX', 'XLS', 'CSV'].includes(d.format) ? 'description' : 'code';
+                    const detailRows = config.distributionFields.map(f => {
+                        const val = d[f.key] || d[f.fallback] || '';
+                        const display = f.isLink && val ? `<a href="${val}" target="_blank">${val}</a>` : (val || '-');
+                        return `<div class="distribution-detail-row"><div class="distribution-detail-key">${f.label}</div><div class="distribution-detail-val">${display}</div></div>`;
+                    }).join('');
+
+                    return `
+                        <div class="distribution-item" data-index="${i}">
+                            <div class="distribution-header">
+                                <div class="distribution-left">${d.name}</div>
+                                <div class="distribution-right">
+                                    <span class="material-symbols-rounded">${icon}</span>
+                                    <span class="distribution-format">${d.format}</span>
+                                    <span class="material-symbols-rounded expand-icon">expand_more</span>
+                                </div>
+                            </div>
+                            <div class="distribution-details">${detailRows}</div>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                distContainer.innerHTML = '<div class="data-row">Keine Bereitstellungsformen definiert</div>';
             }
 
-            // Initialize application
-            init();
+            // Publications
+            const pubHtml = item.publications?.length
+                ? item.publications.map(p => createDataRow(p.catalog, p.value)).join('')
+                : '<div class="data-row">Keine externen Publikationen</div>';
+            $('#detail-dataset-publications').innerHTML = pubHtml;
+        }
 
-            // Expose for debugging if needed
-            window.appState = { conceptDb, datasetDb };
-        })();
+        // === NAVIGATION ===
+        function showView(viewId) {
+            config.views.forEach(id => $(`#${id}`).classList.add('hidden'));
+            $(`#${viewId}`).classList.remove('hidden');
+        }
+
+        function setActiveTab(page) {
+            $$('.nav-link').forEach(tab => tab.classList.remove('active'));
+            const tabPage = (page === 'concept-detail') ? 'concept' : (page === 'dataset-detail') ? 'dataset' : page;
+            $(`.nav-link[data-page="${tabPage}"]`)?.classList.add('active');
+        }
+
+        function setBreadcrumbs(page, title = '') {
+            const crumbs = { 
+                concept: 'Konzepte', 
+                dataset: 'Datenkatalog', 
+                about: 'Über diesen Datenkatalog', 
+                handbuch: 'Handbuch' 
+            };
+            
+            let html = `<a href="#/concept">Startseite</a> <span>&gt;</span> `;
+            
+            if (page.includes('-detail')) {
+                const type = page.replace('-detail', '');
+                html += `<a href="#/${type}">${crumbs[type]}</a> <span>&gt;</span> ${title}`;
+            } else {
+                html += crumbs[page] || page;
+            }
+            
+            $('#breadcrumbs').innerHTML = html;
+        }
+
+        function navigate(page) {
+            showView(`view-${page}-catalog`);
+            setActiveTab(page);
+            setBreadcrumbs(page);
+            renderCatalog(page);
+        }
+
+        async function handleRoute() {
+            const hash = window.location.hash;
+            const [, type, id] = hash.split('/');
+
+            if (type === 'concept' && id) {
+                renderDetail('concept', id);
+            } else if (type === 'dataset' && id) {
+                renderDetail('dataset', id);
+            } else if (type === 'about') {
+                await loadContent('about');
+                showView('view-about');
+                setActiveTab('about');
+                setBreadcrumbs('about');
+            } else if (type === 'handbuch') {
+                await loadContent('handbuch');
+                showView('view-handbuch');
+                setActiveTab('handbuch');
+                setBreadcrumbs('handbuch');
+            } else if (type === 'dataset') {
+                navigate('dataset');
+            } else {
+                navigate('concept');
+            }
+        }
+
+        // === EVENT HANDLERS ===
+        function setupEventListeners() {
+            // Navigation tabs
+            $('#nav-tabs').addEventListener('click', e => {
+                const tab = e.target.closest('.nav-link');
+                if (tab) window.location.hash = `#/${tab.dataset.page}`;
+            });
+
+            // View toggles (delegated)
+            document.addEventListener('click', e => {
+                const toggle = e.target.closest('.toggle-icon');
+                if (!toggle || toggle.classList.contains('active')) return;
+
+                const type = toggle.dataset.type;
+                const view = toggle.dataset.view;
+                
+                state.view[type] = view;
+                
+                // Update toggle buttons
+                $$(`[data-type="${type}"]`).forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.view === view);
+                    btn.classList.toggle('inactive', btn.dataset.view !== view);
+                });
+                
+                renderCatalog(type);
+            });
+
+            // Card/row clicks (delegated)
+            document.addEventListener('click', e => {
+                const card = e.target.closest('.card');
+                const row = e.target.closest('tr[data-id]');
+                const target = card || row;
+                
+                if (!target) return;
+                
+                const container = target.closest('[id^="view-"]');
+                if (!container) return;
+                
+                const type = container.id.includes('concept') ? 'concept' : 'dataset';
+                window.location.hash = `#/${type}/${target.dataset.id}`;
+            });
+
+            // Distribution accordion (delegated)
+            document.addEventListener('click', e => {
+                const header = e.target.closest('.distribution-header');
+                if (header) {
+                    header.closest('.distribution-item').classList.toggle('expanded');
+                }
+            });
+
+            // Search inputs
+            ['concept', 'dataset'].forEach(type => {
+                $(`#search-${type}`)?.addEventListener('input', e => {
+                    state.filter[type] = e.target.value.toLowerCase();
+                    renderCatalog(type);
+                });
+            });
+
+            // Hash change
+            window.addEventListener('hashchange', handleRoute);
+        }
+
+        // === INIT ===
+        async function init() {
+            await loadData();
+            setupEventListeners();
+            handleRoute();
+        }
+
+        init();
+
+        // Debug exposure
+        window.catalogState = state;
+    })();
     </script>
 </body>
 </html>
