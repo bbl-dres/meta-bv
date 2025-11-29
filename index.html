@@ -331,17 +331,20 @@
         .attr-table td { padding: 16px; border-bottom: 1px solid #E5E5E5; vertical-align: top; line-height: 1.5; }
         .attr-table tbody tr:hover { background-color: #F2F4F5; }
 
-        /* --- Distribution Row Styles --- */
-        .distribution-row {
+        /* --- Distribution Accordion Styles --- */
+        .distribution-item {
+            border-bottom: 1px solid #E5E5E5;
+        }
+        .distribution-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 16px 15px;
-            border-bottom: 1px solid #E5E5E5;
             font-size: 16px;
+            cursor: pointer;
             transition: background-color 0.1s;
         }
-        .distribution-row:hover { background-color: #F2F4F5; }
+        .distribution-header:hover { background-color: #F2F4F5; }
         .distribution-left { 
             color: var(--text-black); 
             flex-grow: 1;
@@ -354,10 +357,50 @@
         }
         .distribution-right .material-symbols-rounded {
             font-size: 20px;
+            transition: transform 0.2s ease;
+        }
+        .distribution-right .expand-icon {
+            font-size: 24px;
+        }
+        .distribution-item.expanded .expand-icon {
+            transform: rotate(180deg);
         }
         .distribution-format {
             font-size: 14px;
             font-weight: 500;
+        }
+        .distribution-details {
+            display: none;
+            padding: 0 15px 20px 15px;
+            background-color: #FAFAFA;
+        }
+        .distribution-item.expanded .distribution-details {
+            display: block;
+        }
+        .distribution-detail-row {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid #E5E5E5;
+            font-size: 15px;
+        }
+        .distribution-detail-row:last-child {
+            border-bottom: none;
+        }
+        .distribution-detail-key {
+            width: 200px;
+            flex-shrink: 0;
+            color: var(--text-light);
+        }
+        .distribution-detail-val {
+            color: var(--text-black);
+            word-break: break-all;
+        }
+        .distribution-detail-val a {
+            color: var(--link-color);
+            text-decoration: underline;
+        }
+        .distribution-detail-val a:hover {
+            text-decoration: none;
         }
 
         /* --- Publication Row Styles --- */
@@ -1326,23 +1369,62 @@ BBL Immobilienkatalog (dcat:Catalog)
                     }
                 }
 
-                // Distributions
+                // Distributions (Accordion)
                 const distContainer = document.getElementById('dataset-distributions-list');
                 if (distContainer) {
                     if (item.distributions && item.distributions.length > 0) {
-                        distContainer.innerHTML = item.distributions.map(d => {
-                            const icon = d.format === 'Excel' ? 'description' : 'code';
+                        distContainer.innerHTML = item.distributions.map((d, index) => {
+                            const icon = ['Excel', 'XLSX', 'XLS', 'CSV'].includes(d.format) ? 'description' : 'code';
+                            
+                            // Build detail rows - support both old simple format and new extended format
+                            const detailFields = [
+                                { key: 'Identifikator', val: d.identifikator },
+                                { key: 'Titel', val: d.titel || d.name },
+                                { key: 'Zugriffs-URL', val: d.zugriffsUrl, isLink: true },
+                                { key: 'Download-URL', val: d.downloadUrl, isLink: true },
+                                { key: 'Status', val: d.status },
+                                { key: 'Dateiformat', val: d.dateiformat || d.format },
+                                { key: 'Lizenz', val: d.lizenz },
+                                { key: 'Zusätzliche Bemerkungen', val: d.bemerkungen }
+                            ];
+
+                            const detailRowsHtml = detailFields.map(f => {
+                                let valHtml = f.val || '-';
+                                if (f.isLink && f.val) {
+                                    valHtml = `<a href="${f.val}" target="_blank">${f.val}</a>`;
+                                }
+                                return `
+                                    <div class="distribution-detail-row">
+                                        <div class="distribution-detail-key">${f.key}</div>
+                                        <div class="distribution-detail-val">${valHtml}</div>
+                                    </div>
+                                `;
+                            }).join('');
+
                             return `
-                                <div class="distribution-row">
-                                    <div class="distribution-left">${d.name}</div>
-                                    <div class="distribution-right">
-                                        <span class="material-symbols-rounded">${icon}</span>
-                                        <span class="distribution-format">${d.format}</span>
-                                        <span class="material-symbols-rounded">expand_more</span>
+                                <div class="distribution-item" data-index="${index}">
+                                    <div class="distribution-header">
+                                        <div class="distribution-left">${d.name}</div>
+                                        <div class="distribution-right">
+                                            <span class="material-symbols-rounded">${icon}</span>
+                                            <span class="distribution-format">${d.format}</span>
+                                            <span class="material-symbols-rounded expand-icon">expand_more</span>
+                                        </div>
+                                    </div>
+                                    <div class="distribution-details">
+                                        ${detailRowsHtml}
                                     </div>
                                 </div>
                             `;
                         }).join('');
+
+                        // Add click handlers for accordion
+                        distContainer.querySelectorAll('.distribution-header').forEach(header => {
+                            header.addEventListener('click', () => {
+                                const item = header.closest('.distribution-item');
+                                item.classList.toggle('expanded');
+                            });
+                        });
                     } else {
                         distContainer.innerHTML = '<div class="meta-row">Keine Bereitstellungsformen definiert</div>';
                     }
