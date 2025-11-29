@@ -1,4 +1,4 @@
-Logisches Datenmodell (meta-bv)
+Datenkatalog BBL Bauten
 ===============================
 
 **Status:** Prototyp / Konzept
