@@ -11,14 +11,14 @@
         /* === 1. VARIABLES & RESET === */
         :root {
             --swiss-red: #DC0018;
-            --text-black: #222;
-            --text-dark: #333;
+            --text-black: #000;
+            --text-dark: #2F4356;
             --text-light: #666;
             --border: #CCC;
             --border-light: #E5E5E5;
             --bg-gray: #F5F5F5;
             --bg-hover: #F2F4F5;
-            --footer-bg: #454545;
+            --footer-bg: #263645;
             --link-color: #06C;
             --font-stack: "Frutiger", "Helvetica Neue", Helvetica, Arial, sans-serif;
             
@@ -44,7 +44,7 @@
         body { 
             margin: 0; 
             font-family: var(--font-stack); 
-            color: var(--text-dark); 
+            color: var(--text-black); 
             background: white;
             -webkit-font-smoothing: antialiased;
             display: flex;
@@ -72,12 +72,20 @@
         .container { flex: 1; }
 
         /* === 3. HEADER & BRANDING === */
-        header { padding-top: var(--spacing-lg); padding-bottom: var(--spacing-md); }
+        header {
+            width: 100%;
+        }
         
-        .header-inner {
+        .header-branding-row {
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .header-branding-inner {
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
+            padding-top: var(--spacing-lg);
+            padding-bottom: var(--spacing-md);
         }
 
         .branding { display: flex; align-items: flex-start; gap: var(--spacing-md); }
@@ -121,14 +129,16 @@
         .lang-selector .material-symbols-rounded { font-size: 18px; }
 
         /* === 4. NAVIGATION === */
+        .header-nav-row {
+            border-bottom: 1px solid var(--border);
+        }
+        
         .nav-tabs {
-            margin-top: 45px;
-            border-bottom: 1px solid var(--border-light);
             display: flex;
             gap: 35px;
         }
         .nav-link {
-            padding-bottom: var(--spacing-sm);
+            padding: var(--spacing-sm) 0;
             font-size: 16px;
             color: var(--text-black);
             cursor: pointer;
@@ -187,8 +197,9 @@
         }
         .search-group { display: flex; gap: var(--spacing-sm); width: 100%; max-width: 500px; }
         .input-wrapper {
-            width: 280px;  /* fixed width */
-            flex-shrink: 0; /* don't shrink */
+            width: 280px;
+            flex-shrink: 0;
+            position: relative;
         }
                
         .input-wrapper input {
@@ -256,7 +267,7 @@
         }
         
         .btn-filter.active:hover {
-            background: #444;
+            background: #3d566b;
         }
         
         .btn-reset {
@@ -292,7 +303,7 @@
             cursor: pointer;
             transition: background-color 0.2s;
         }
-        .toggle-icon.active { background: #666; color: white; pointer-events: none; }
+        .toggle-icon.active { background: var(--text-dark); color: white; pointer-events: none; }
         .toggle-icon.inactive { background: white; color: var(--text-dark); border: 1px solid var(--border-input); }
         .toggle-icon.inactive:hover { background: var(--bg-gray); }
 
@@ -546,8 +557,8 @@
         }
         
         .tag-pill.tag-pill--active:hover {
-            background: #444;
-            border-color: #444;
+            background: #3d566b;
+            border-color: #3d566b;
         }
 
         /* === 11. LIST VIEW === */
@@ -604,7 +615,7 @@
         }
         .data-row:hover { background-color: var(--bg-hover); }
         .data-row-key { width: 280px; font-weight: 400; flex-shrink: 0; color: var(--text-black); }
-        .data-row-val { color: var(--text-dark); display: flex; align-items: center; flex-wrap: wrap; gap: var(--spacing-xs); line-height: 1.5; }
+        .data-row-val { color: var(--text-black); display: flex; align-items: center; flex-wrap: wrap; gap: var(--spacing-xs); line-height: 1.5; }
 
         .meta-list, .distributions-list, .publications-list { border-top: 1px solid var(--border-light); }
 
@@ -750,9 +761,9 @@
 </head>
 <body>
 
-    <div class="container u-max-width">
-        <header>
-            <div class="header-inner">
+    <header>
+        <div class="header-branding-row">
+            <div class="header-branding-inner u-max-width">
                 <div class="branding">
                     <div class="logo-wrapper">
                         <img src="https://raw.githubusercontent.com/davras5/meta-bv/212ee3a88abba781fd699543b02df718e68fde63/Coat_of_arms_of_Switzerland.svg.png" alt="Wappen der Schweiz">
@@ -769,15 +780,19 @@
                     <div class="lang-selector">DE <span class="material-symbols-rounded">expand_more</span></div>
                 </div>
             </div>
+        </div>
 
-            <nav class="nav-tabs" id="nav-tabs">
+        <div class="header-nav-row">
+            <nav class="nav-tabs u-max-width" id="nav-tabs">
                 <div class="nav-link active" data-page="concept">Konzepte</div>
                 <div class="nav-link" data-page="dataset">Datensätze</div>
                 <div class="nav-link" data-page="about">über diesen Datenkatalog</div>
                 <div class="nav-link" data-page="handbuch">Handbuch</div>
             </nav>
-        </header>
+        </div>
+    </header>
 
+    <div class="container u-max-width">
         <div class="sub-header">
             <div class="breadcrumbs" id="breadcrumbs">
                 Startseite <span>&gt;</span> Konzepte
