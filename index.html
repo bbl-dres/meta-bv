@@ -186,7 +186,11 @@
             margin-bottom: 40px;
         }
         .search-group { display: flex; gap: var(--spacing-sm); width: 100%; max-width: 500px; }
-        .input-wrapper { position: relative; flex-grow: 1; }
+        .input-wrapper {
+            width: 280px;  /* fixed width */
+            flex-shrink: 0; /* don't shrink */
+        }
+               
         .input-wrapper input {
             width: 100%; 
             padding: 10px var(--spacing-sm) 10px 48px;
