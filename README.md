@@ -1,43 +1,49 @@
-Datenkatalog BBL Bauten
-===============================
+# BBL Buildings Data Catalog
 
-**Status:** Prototyp / Konzept
+**Status:** Prototype / Concept
 
-Dies ist der Prototyp für einen **Datenkatalog** des Bundesamtes für Bauten und Logistik (BBL), Bereich Bauten. Ziel ist die transparente Dokumentation und Verknüpfung von Geschäftsobjekten, Metadaten und Attributen gemäss dem DCAT-AP CH Standard.
+This is a prototype **Data Catalog** for the Federal Office for Buildings and Logistics (BBL), Buildings Division. The goal is to provide transparent documentation and linking of business objects, metadata, and attributes according to the DCAT-AP CH standard.
 
-Live Demo
----------
+## Live Demo
 
-Die aktuelle Version des Prototypen ist via GitHub Pages verfügbar:
+The current version of the prototype is available via GitHub Pages:
 
-[**Zur Live-Anwendung**](https://davras5.github.io/meta-bv/ "null")
+[**View Live Application**](https://davras5.github.io/meta-bv/)
 
 ![Preview](images/readme/Preview.JPG)
 
-Technologie
------------
+## Project Structure
 
-Dieses Projekt ist als minimalistischer **Single-File-Web-Prototyp** konzipiert, um maximale Einfachheit und schnelle Bereitstellung zu gewährleisten.
+```
+meta-bv/
+├── index.html              # Main single-file web application
+├── content/
+│   ├── about.html          # About page content
+│   └── handbuch.html       # User manual/handbook
+├── data/
+│   ├── datasets.json       # Dataset definitions (buildings, contracts, etc.)
+│   └── concepts.json       # Concept definitions (technical objects, spatial structures)
+└── images/
+    ├── BBL DCAT-AP CH.avif # DCAT-AP CH diagram
+    ├── ch.png              # Swiss coat of arms
+    └── readme/
+        └── Preview.JPG     # Application preview screenshot
+```
 
--   **HTML5:** Struktur und Layout
+## Technology
 
--   **CSS3:** Styling mittels CSS-Variablen und Responsive Design.
+This project is designed as a minimalist **single-file web prototype** to ensure maximum simplicity and rapid deployment.
 
--   **JavaScript (Vanilla JS):** Dynamisches Laden der Daten, Routing (via Hash), Filterung, View-Umschaltung (Grid/List) und Rendering der Detailansichten.
+- **HTML5:** Structure and layout
+- **CSS3:** Styling with CSS variables and responsive design
+- **JavaScript (Vanilla JS):** Dynamic data loading, hash-based routing, filtering, view switching (Grid/List), and detail view rendering
+- **Data Source:** The catalog is populated via external JSON files (`datasets.json` and `concepts.json`)
 
--   **Datenquelle:** Der Katalog wird über eine externe `data.json` Datei befüllt (nicht im Code enthalten, muss im Repository vorhanden sein).
+## Features
 
-Funktionen (Frontend)
----------------------
-
--   **Navigation:** Hash-basierte Navigation zwischen den Hauptansichten (Datenmodell, Über, Handbuch).
-
--   **Datenanzeige:** Umschaltung zwischen Grid-Card-Ansicht und detaillierter Listenansicht.
-
--   **Suche/Filter:** Dynamische Suche über Titel, Beschreibung und Tags.
-
--   **Detailansicht:** Detaillierte Ansicht eines Geschäftsobjekts, einschliesslich Metadaten und Attribute-Tabelle (PK/FK/Format-Badges).
-
--   **Corporate Design:** Verwendung des offiziellen Schweizer Wappens als Inline-SVG und der Schriftfamilie "Frutiger" (via Fallback-Stack) für ein authentisches Erscheinungsbild der Bundesverwaltung.
-
--   **Dokumentation:** Integrierte "Über"- und "Handbuch"-Sektionen für die statische Konzeptdokumentation.
+- **Navigation:** Hash-based navigation between main views (Data Model, About, Manual)
+- **Data Display:** Toggle between grid card view and detailed list view
+- **Search/Filter:** Dynamic search across titles, descriptions, and tags
+- **Detail View:** Detailed view of business objects including metadata and attribute tables (PK/FK/Format badges)
+- **Corporate Design:** Uses the official Swiss coat of arms and the "Frutiger" font family (via fallback stack) for an authentic Swiss Federal Administration appearance
+- **Documentation:** Integrated "About" and "Manual" sections for static concept documentation
