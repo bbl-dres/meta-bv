@@ -47,6 +47,10 @@
     ],
     "publications": [
       { "catalog": "I14Y Interoperabilitätsplattform", "value": "Gebäude Bund" }
+    ],
+    "responsiblePersons": [
+      { "admindirId": "p-1YFBMPWKZ", "role": "Data Owner" },
+      { "admindirId": "p-2560681", "role": "Data Steward" }
     ]
   },
   {
@@ -97,6 +101,9 @@
     ],
     "publications": [
       { "catalog": "I14Y Interoperabilitätsplattform", "value": "Grundstücke Bund" }
+    ],
+    "responsiblePersons": [
+      { "admindirId": "p-3847291", "role": "Data Owner" }
     ]
   },
   {
@@ -145,7 +152,10 @@
         "bemerkungen": "OpenAPI Spec verfügbar"
       }
     ],
-    "publications": []
+    "publications": [],
+    "responsiblePersons": [
+      { "admindirId": "p-5928374", "role": "Data Steward" }
+    ]
   },
   {
     "id": "4",
