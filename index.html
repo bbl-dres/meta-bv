@@ -631,6 +631,38 @@
         .box-title { font-weight: bold; margin-bottom: var(--spacing-xs); font-size: 18px; }
         .box-text { font-size: 16px; font-style: italic; color: #666; }
 
+        /* Responsible Person Rows */
+        .responsible-person-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .responsible-person-row:last-child {
+            border-bottom: none;
+        }
+        .responsible-person-row:first-child {
+            padding-top: 8px;
+        }
+        .responsible-person-link {
+            font-size: 15px;
+            color: var(--link-color);
+            text-decoration: underline;
+        }
+        .responsible-person-link:hover {
+            text-decoration: none;
+        }
+        .role-badge {
+            background: white;
+            border: 1px solid #999;
+            padding: 6px 14px;
+            border-radius: var(--radius-pill);
+            font-size: 13px;
+            color: #444;
+            white-space: nowrap;
+        }
+
         .section-title { font-size: 24px; font-weight: 400; margin: var(--spacing-xl) 0 25px 0; }
 
         /* === 13. DATA ROWS (Shared pattern) === */
@@ -1115,9 +1147,9 @@
                         <img id="detail-concept-img" src="" alt="">
                     </div>
                 </div>
-                <div class="responsible-box">
-                    <div class="box-title">Verantwortliche Person</div>
-                    <div class="box-text">Niemand fühlt sich für diesen Datensatz zuständig – höchste Zeit, jemandem diese Ehre zu erteilen!</div>
+                <div class="responsible-box" id="responsible-box-concept">
+                    <div class="box-title">Verantwortliche Personen</div>
+                    <div class="box-content"></div>
                 </div>
                 <h3 class="section-title">Metadaten</h3>
                 <div class="meta-list" id="detail-concept-meta"></div>
@@ -1150,9 +1182,9 @@
                         <img id="detail-dataset-img" src="" alt="">
                     </div>
                 </div>
-                <div class="responsible-box">
-                    <div class="box-title">Verantwortliche Person</div>
-                    <div class="box-text">Niemand fühlt sich für diesen Datensatz zuständig – höchste Zeit, jemandem diese Ehre zu erteilen!</div>
+                <div class="responsible-box" id="responsible-box-dataset">
+                    <div class="box-title">Verantwortliche Personen</div>
+                    <div class="box-content"></div>
                 </div>
                 <h3 class="section-title">Metadaten</h3>
                 <div class="meta-list" id="detail-dataset-meta"></div>
@@ -1391,6 +1423,27 @@
             }).join('');
         }
 
+        function renderResponsiblePersons(type, persons) {
+            const container = $(`#responsible-box-${type} .box-content`);
+
+            if (!persons || persons.length === 0) {
+                container.innerHTML = '<div class="box-text">Niemand fühlt sich für diesen Datensatz zuständig – höchste Zeit, jemandem diese Ehre zu erteilen!</div>';
+                return;
+            }
+
+            const html = persons.map(person => {
+                const admindirUrl = `https://admindir.verzeichnisse.admin.ch/person/${person.admindirId}`;
+                return `
+                    <div class="responsible-person-row">
+                        <span>AdminDir ID: <a href="${admindirUrl}" target="_blank" class="responsible-person-link">${person.admindirId}</a></span>
+                        <span class="role-badge">${person.role}</span>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = html;
+        }
+
         // === FILTERING ===
         function filterItems(items, searchText, tags) {
             return items.filter(item => {
@@ -1586,6 +1639,9 @@
             $(`#detail-${type}-desc`).textContent = item.fullDescription || item.description;
             $(`#detail-${type}-img`).src = item.image || '';
             $(`#detail-${type}-tags`).innerHTML = createTags(item.bottomTags || []);
+
+            // Responsible Persons
+            renderResponsiblePersons(type, item.responsiblePersons);
 
             // Metadata
             const metaHtml = item.meta 
@@ -1899,17 +1955,25 @@
                 }
             });
 
-            // Tag pill click in cards/list (add to filter)
+            // Tag pill click in cards/list (add to filter) or detail view (navigate with filter)
             document.addEventListener('click', e => {
                 const tagPill = e.target.closest('.tag-pill[data-tag]');
                 if (tagPill && !e.target.closest('.tag-input-wrapper')) {
                     e.stopPropagation();
                     const tag = tagPill.dataset.tag;
                     const current = parseHash();
-                    
-                    // Add tag to filter (don't toggle panel)
-                    if (!current.tags.includes(tag)) {
-                        updateUrl({ tags: [...current.tags, tag] });
+
+                    // Check if we're in a detail view
+                    const detailView = e.target.closest('[id^="view-"][id$="-detail"]');
+                    if (detailView) {
+                        // Navigate to gallery with this tag as filter
+                        const type = detailView.id.includes('concept') ? 'concept' : 'dataset';
+                        location.hash = buildHash(type, null, { tags: [tag], view: current.view });
+                    } else {
+                        // Add tag to filter (don't toggle panel)
+                        if (!current.tags.includes(tag)) {
+                            updateUrl({ tags: [...current.tags, tag] });
+                        }
                     }
                 }
             });

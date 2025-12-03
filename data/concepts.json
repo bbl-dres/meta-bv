@@ -27,6 +27,9 @@
       { "name": "Tragfähigkeit", "format": "Dezimalzahl", "key": "-", "list": "-", "desc": "Maximale Tragfähigkeit in kg" },
       { "name": "Personenkapazität", "format": "Ganzzahl", "key": "-", "list": "-", "desc": "Maximale Personenzahl" },
       { "name": "Anlagentyp", "format": "Text", "key": "-", "list": "Aufzugstypen", "desc": "Art der Anlage (Personenaufzug, Lastenaufzug, etc.)" }
+    ],
+    "responsiblePersons": [
+      { "admindirId": "p-4721938", "role": "Data Owner" }
     ]
   },
   {
@@ -57,6 +60,10 @@
       { "name": "Fläche", "format": "Dezimalzahl", "key": "-", "list": "-", "desc": "Grundstücksfläche in m²" },
       { "name": "Eigentümer", "format": "Text", "key": "FK", "list": "-", "desc": "Referenz zum Eigentümer" },
       { "name": "Nutzungszone", "format": "Text", "key": "-", "list": "Nutzungszonen", "desc": "Baurechtliche Nutzungszone" }
+    ],
+    "responsiblePersons": [
+      { "admindirId": "p-8293847", "role": "Data Owner" },
+      { "admindirId": "p-1029384", "role": "Data Steward" }
     ]
   },
   {
@@ -147,6 +154,9 @@
       { "name": "Grundstück_ID", "format": "Text", "key": "FK", "list": "-", "desc": "Referenz zum zugehörigen Grundstück" },
       { "name": "Baujahr", "format": "Ganzzahl", "key": "-", "list": "-", "desc": "Jahr der Fertigstellung" },
       { "name": "Gebäudekategorie", "format": "Text", "key": "-", "list": "Gebäudekategorien", "desc": "Nutzungskategorie gemäss VGWR" }
+    ],
+    "responsiblePersons": [
+      { "admindirId": "p-5647382", "role": "Data Steward" }
     ]
   },
   {
