@@ -1,6 +1,8 @@
 # BBL Buildings Data Catalog (meta-bv)
 
-A data catalog for the Swiss Federal Office for Buildings and Logistics (BBL). Documents business objects and datasets according to the DCAT-AP CH v3.0 standard.
+**This is a prototype for demonstration purposes.**
+
+A prototype for a data catalog for the Swiss Federal Office for Buildings and Logistics (BBL). Documents business objects and datasets according to the DCAT-AP CH v3.0 standard.
 
 - Deployed: https://davras5.github.io/meta-bv/
 
