@@ -1,4 +1,4 @@
-# BBL Buildings Data Catalog (meta-bv)
+# Data Catalog / Datenkatalog IMMO
 
 **This is a prototype for demonstration purposes.**
 
